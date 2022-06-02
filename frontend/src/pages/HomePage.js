@@ -1,9 +1,11 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
+import Container from 'react-bootstrap/esm/Container';
 import Product from '../components/Product';
+import { Helmet } from 'react-helmet-async';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,9 +41,11 @@ function HomePage() {
   }, []);
 
   return (
-    <div>
-      <h1>Featured Products</h1>
-      <div className='products'>
+    <Container >
+      <Helmet>
+        <title>The Good Deals</title>
+      </Helmet>
+      <div>
         {loading ? (
           <div>
             <h1>Loading...</h1>
@@ -52,6 +56,7 @@ function HomePage() {
           </div>
         ) : (
           <Row>
+            <h1>Featured Products</h1>
             {products.map((product) => (
               <Col key={product.slug} sm={6} md={4} lg={3} className='mb-3'>
                 <Product product={product}></Product>
@@ -60,7 +65,7 @@ function HomePage() {
           </Row>
         )}
       </div>
-    </div>
+    </Container>
   );
 }
 
