@@ -19,7 +19,7 @@ function App() {
           </Navbar>
         </header>
         <main>
-          <Container fluid className='mt-4'>
+          <Container className='mt-4'>
             <Routes>
               <Route path='/product/:slug' element={<ProductPage />} />
               <Route path='/' element={<HomePage />} />

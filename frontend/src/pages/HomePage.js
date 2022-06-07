@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async';
+import Loading from '../components/Loading';
+import Message from '../components/Message';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -41,22 +43,22 @@ function HomePage() {
   }, []);
 
   return (
-    <Container >
+    <Container>
       <Helmet>
         <title>The Good Deals</title>
       </Helmet>
-      <div>
+      <h1>Featured Products</h1>
+      <div className='products'>
         {loading ? (
           <div>
-            <h1>Loading...</h1>
+            <Loading />
           </div>
         ) : error ? (
           <div>
-            <h1>{error}</h1>
+            <Message variant='danger'>{error}</Message>
           </div>
         ) : (
           <Row>
-            <h1>Featured Products</h1>
             {products.map((product) => (
               <Col key={product.slug} sm={6} md={4} lg={3} className='mb-3'>
                 <Product product={product}></Product>

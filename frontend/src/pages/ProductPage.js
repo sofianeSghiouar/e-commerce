@@ -10,6 +10,9 @@ import Badge from 'react-bootstrap/esm/Badge';
 import Button from 'react-bootstrap/esm/Button';
 import Image from 'react-bootstrap/esm/Image';
 import Rating from '../components/Rating';
+import Loading from '../components/Loading';
+import Message from '../components/Message';
+import getErrorMessage from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -43,20 +46,20 @@ function ProductPage() {
         console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (error) {
-        dispatch({ type: 'FETCH_FAIL', payload: error.message });
+        dispatch({ type: 'FETCH_FAIL', payload: getErrorMessage(error) });
       }
     };
     fetchProducts();
   }, [slug]);
 
   return (
-    <div className=' d-flex justify-content-between'>
+    <div>
       {loading ? (
         <div>
-          <h1>Loading...</h1>
+          <Loading />
         </div>
       ) : error ? (
-        <div>{error}</div>
+        <Message variant="danger">{error}</Message>
       ) : (
         <Row className='d-flex justify-content-around w-100'>
           <Col md={6} className='d-flex flex-wrap'>

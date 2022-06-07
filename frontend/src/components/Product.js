@@ -8,7 +8,7 @@ function Product({ product }) {
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <img src={product.images[0]} className='card-img-top' alt={product.name} />
+        <Card.Img variant="top" src={product.images[0]} className='card-img-top' alt={product.name} />
       </Link>
       <Card.Body className='product-info'>
         <Link to={`/product/${product.slug}`}>

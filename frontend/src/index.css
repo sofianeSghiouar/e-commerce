@@ -15,6 +15,12 @@ main {
   flex: 1;
 }
 
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .btn-primary {
   background-color: rgb(255, 196, 0);
   color: #000;
