@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/esm/Card';
+import Button from 'react-bootstrap/esm/Button';
 import Rating from './Rating';
 
 function Product({ product }) {
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <img src={product.image} className='card-img-top' alt={product.name} />
+        <Card.Img variant="top" src={product.images[0]} className='card-img-top' alt={product.name} />
       </Link>
       <Card.Body className='product-info'>
         <Link to={`/product/${product.slug}`}>
@@ -16,7 +16,7 @@ function Product({ product }) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>
-        <Button className='btn-warning'>Add to cart</Button>
+        <Button variant='primary'>Add to cart</Button>
       </Card.Body>
     </Card>
   );

@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/esm/Navbar';
+import Container from 'react-bootstrap/esm/Container';
 import { LinkContainer } from 'react-router-bootstrap';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           </Navbar>
         </header>
         <main>
-          <Container>
+          <Container className='mt-4'>
             <Routes>
               <Route path='/product/:slug' element={<ProductPage />} />
               <Route path='/' element={<HomePage />} />

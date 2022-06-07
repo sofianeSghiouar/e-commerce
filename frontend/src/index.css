@@ -21,6 +21,10 @@ main {
   justify-content: center;
 }
 
+.btn-primary {
+  background-color: rgb(255, 196, 0);
+  color: #000;
+}
 .rating {
   color: rgb(255, 196, 0);
 }
