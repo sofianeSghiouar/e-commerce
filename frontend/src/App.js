@@ -1,11 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 import Navbar from 'react-bootstrap/esm/Navbar';
+import Nav from 'react-bootstrap/esm/Nav';
 import Container from 'react-bootstrap/esm/Container';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Store } from './Store';
+import { useContext } from 'react';
+import Badge from 'react-bootstrap/esm/Badge';
 
 function App() {
+  const { state } = useContext(Store);
+  const { cart } = state;
   return (
     <BrowserRouter>
       <div className='d-flex flex-column app-container'>
@@ -15,6 +21,23 @@ function App() {
               <LinkContainer to='/'>
                 <Navbar.Brand>The Good Deals</Navbar.Brand>
               </LinkContainer>
+              <Nav>
+                <Link to='/cart' className='nav-link'>
+                  <i
+                    className={`typcn typcn-shopping-cart icon-cart ${
+                      cart.cartItems.length > 0 ? 'text-warning' : 'text-light'
+                    }`}
+                  >
+                    {cart.cartItems.length > 0 && (
+                      <Badge pill bg='danger' className='cart-items'>
+                        {cart.cartItems.reduce((a, item) => {
+                          return a + item.quantity;
+                        }, 0)}
+                      </Badge>
+                    )}
+                  </i>
+                </Link>
+              </Nav>
             </Container>
           </Navbar>
         </header>
@@ -27,7 +50,7 @@ function App() {
           </Container>
         </main>
         <footer>
-          <div className="text-center">All rights reserved</div>
+          <div className='text-center'>All rights reserved</div>
         </footer>
       </div>
     </BrowserRouter>

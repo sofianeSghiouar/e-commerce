@@ -1,6 +1,9 @@
+import {v4 as uuid} from 'uuid'
+
 const data = {
   products: [
     {
+      _id: uuid(),
       name: 'Nike Slim Shirt',
       slug: 'nike-slim-shirt',
       category: 'Shirts',
@@ -19,6 +22,7 @@ const data = {
       description: 'high quality product',
     },
     {
+      _id: uuid(),
       name: 'Adidas Fit Shirt',
       slug: 'adidas-fit-shirt',
       category: 'Shirts',
@@ -31,6 +35,7 @@ const data = {
       description: 'high quality product',
     },
     {
+      _id: uuid(),
       name: 'Nike Slim Pant',
       slug: 'nike-slim-pant',
       category: 'Pants',
@@ -43,6 +48,7 @@ const data = {
       description: 'high quality product',
     },
     {
+      _id: uuid(),
       name: 'Adidas Fit Pant',
       slug: 'adidas-fit-pant',
       category: 'Pants',

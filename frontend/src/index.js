@@ -5,12 +5,15 @@ import './index.css';
 import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 import reportWebVitals from './reportWebVitals';
+import { StoreProvider } from './Store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>
+  <StoreProvider>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </StoreProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

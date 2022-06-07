@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
-import {Helmet} from 'react-helmet-async'
+import { Helmet } from 'react-helmet-async';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
 import ListGroup from 'react-bootstrap/esm/ListGroup';
@@ -13,6 +13,7 @@ import Rating from '../components/Rating';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
 import getErrorMessage from '../utils';
+import { Store } from '../Store';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -41,9 +42,8 @@ function ProductPage() {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const result = await axios.get(
-          `http://localhost:8000/api/products/${slug}`
+          `http://localhost:8000/api/products/slug/${slug}`
         );
-        console.log(result);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (error) {
         dispatch({ type: 'FETCH_FAIL', payload: getErrorMessage(error) });
@@ -52,6 +52,29 @@ function ProductPage() {
     fetchProducts();
   }, [slug]);
 
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart } = state;
+
+  const handleAddToCart = async () => {
+    const alreadyInCart = cart.cartItems.find(
+      (item) => item._id === product._id
+    );
+
+    const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
+    const { data } = await axios.get(
+      `http://localhost:8000/api/products/${product._id}`
+    );
+
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    ctxDispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...product, quantity },
+    });
+  };
+
   return (
     <div>
       {loading ? (
@@ -59,21 +82,23 @@ function ProductPage() {
           <Loading />
         </div>
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Row className='d-flex justify-content-around w-100'>
-          <Col md={6} className='d-flex flex-wrap'>
+          <Col lg={6} className='d-flex flex-wrap'>
             {product.images.map((img) => (
               <Image
                 fluid
                 key={img}
-                className={`${product.images.length > 2 ? "w-50" : "w-100"} p-3`}
+                className={`${
+                  product.images.length > 2 ? 'w-50' : 'w-100'
+                } p-3`}
                 src={img}
                 alt={product.name}
               />
             ))}
           </Col>
-          <Col md={3}>
+          <Col md={4} lg={3}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
                 <Helmet>
@@ -93,7 +118,7 @@ function ProductPage() {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={2}>
+          <Col md={4} lg={3}>
             <Card>
               <Card.Body>
                 <ListGroup>
@@ -118,14 +143,18 @@ function ProductPage() {
                   {product.countInStock === 0 && (
                     <ListGroup.Item>
                       <div className='d-grid'>
-                        <Button variant='danger' disabled>Add To Card</Button>
+                        <Button variant='danger' disabled>
+                          Add To Card
+                        </Button>
                       </div>
                     </ListGroup.Item>
                   )}
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <div className='d-grid'>
-                        <Button variant='primary'>Add To Card</Button>
+                        <Button onClick={handleAddToCart} variant='primary'>
+                          Add To Card
+                        </Button>
                       </div>
                     </ListGroup.Item>
                   )}
