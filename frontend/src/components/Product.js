@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/esm/Card';
 import Button from 'react-bootstrap/esm/Button';
-import Rating from './Rating';
+import axios from 'axios';
 
-function Product({ product }) {
+import Rating from './Rating';
+import { Store } from '../Store';
+
+function Product(props) {
+  const { product } = props;
+  const { state, dispatch: storeDispatch } = useContext(Store);
+  const {
+    cart: { cartItems },
+  } = state;
+  
+  async function addToCartHandler(article) {
+    const alreadyInCart = cartItems.find((item) => item._id === article._id);
+
+    const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
+    const { data } = await axios.get(
+      `http://localhost:8000/api/products/${article._id}`
+    );
+    if (data.countInStock < article.quantity) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    const payload = { ...article, quantity }
+    storeDispatch({ type: 'CART_ADD_ITEM', payload });
+  }
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <Card.Img variant="top" src={product.images[0]} className='card-img-top' alt={product.name} />
+        <Card.Img
+          variant='top'
+          src={product.image}
+          className='card-img-top'
+          alt={product.name}
+        />
       </Link>
       <Card.Body className='product-info'>
         <Link to={`/product/${product.slug}`}>
@@ -16,7 +44,14 @@ function Product({ product }) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>
-        <Button variant='primary'>Add to cart</Button>
+
+        {product.countInStock === 0 ? (
+          <Button variant='light' className='text-danger' disabled>
+            Out of Stock
+          </Button>
+        ) : (
+          <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
+        )}
       </Card.Body>
     </Card>
   );

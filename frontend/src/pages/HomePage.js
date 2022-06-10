@@ -1,11 +1,12 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import logger from 'use-reducer-logger';
+// import logger from 'use-reducer-logger';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
-import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async';
+
+import Product from '../components/Product';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
 
@@ -23,7 +24,7 @@ const reducer = (state, action) => {
 };
 
 function HomePage() {
-  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, { // wrap reducer in logger() for steps infos
     products: [],
     loading: true,
     error: '',
