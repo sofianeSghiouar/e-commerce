@@ -1,13 +1,16 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import ProductPage from './pages/ProductPage';
 import Navbar from 'react-bootstrap/esm/Navbar';
 import Nav from 'react-bootstrap/esm/Nav';
 import Container from 'react-bootstrap/esm/Container';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Store } from './Store';
 import { useContext } from 'react';
 import Badge from 'react-bootstrap/esm/Badge';
+
+import { Store } from './Store';
+import HomePage from './pages/HomePage';
+import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
+import SigninPage from './pages/SigninPage';
 
 function App() {
   const { state } = useContext(Store);
@@ -29,9 +32,9 @@ function App() {
                     }`}
                   >
                     {cart.cartItems.length > 0 && (
-                      <Badge pill bg='danger' className='cart-items'>
+                      <Badge pill bg='danger' className='cart-items-badge'>
                         {cart.cartItems.reduce((a, item) => {
-                          return a + item.quantity;
+                          return a + item.quantity || 0;
                         }, 0)}
                       </Badge>
                     )}
@@ -44,6 +47,8 @@ function App() {
         <main>
           <Container className='mt-4'>
             <Routes>
+              <Route path='/signin' element={<SigninPage />} />
+              <Route path='/cart' element={<CartPage />} />
               <Route path='/product/:slug' element={<ProductPage />} />
               <Route path='/' element={<HomePage />} />
             </Routes>

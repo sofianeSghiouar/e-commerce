@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
@@ -29,11 +29,13 @@ const reducer = (state, action) => {
 };
 
 function ProductPage() {
+  const navigate = useNavigate();
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
-    product: '',
+    product: [],
     loading: true,
     error: '',
   });
+  const [isItemInCart, setIsItemInCart] = useState(false);
   const params = useParams();
   const { slug } = params;
 
@@ -52,14 +54,14 @@ function ProductPage() {
     fetchProducts();
   }, [slug]);
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart } = state;
 
   const handleAddToCart = async () => {
+    setIsItemInCart(true);
     const alreadyInCart = cart.cartItems.find(
       (item) => item._id === product._id
     );
-
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
     const { data } = await axios.get(
       `http://localhost:8000/api/products/${product._id}`
@@ -69,18 +71,21 @@ function ProductPage() {
       window.alert('Sorry. Product is out of stock');
       return;
     }
-    ctxDispatch({
+    const payload = { ...product, quantity };
+    storeDispatch({
       type: 'CART_ADD_ITEM',
-      payload: { ...product, quantity },
-    });
+      payload,
+    }); 
+  };
+
+  const handleGoToCart = () => {
+    navigate('/cart');
   };
 
   return (
     <div>
       {loading ? (
-        <div>
-          <Loading />
-        </div>
+        <Loading />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
@@ -154,6 +159,19 @@ function ProductPage() {
                       <div className='d-grid'>
                         <Button onClick={handleAddToCart} variant='primary'>
                           Add To Card
+                        </Button>
+                      </div>
+                    </ListGroup.Item>
+                  )}
+                  {isItemInCart && (
+                    <ListGroup.Item>
+                      <div className='d-grid'>
+                        <Button
+                          onClick={handleGoToCart}
+                          bg='light'
+                          variant='success'
+                        >
+                          Go To Card
                         </Button>
                       </div>
                     </ListGroup.Item>
