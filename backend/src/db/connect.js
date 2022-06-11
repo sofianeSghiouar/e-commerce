@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-import data from './data.js';
-import ProductModel from './models/product.js';
+
+import data from '../data.js';
+import ProductModel from '../models/product.js';
 
 const start = () => {
   return mongoose
-    .connect(
-      'mongodb+srv://thegooddeal:JtiMPgFBGQ6yY0MS@thegooddeal.rmmdg.mongodb.net/thegoodplan?retryWrites=true&w=majority',
+    .connect(process.env.DB_URL,
       { useNewUrlParser: true }
     )
     .then(async () => {
