@@ -16,6 +16,8 @@ import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
+import ShippingAddressPage from './pages/ShippingAddressPage';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   const { state, dispatch: storeDispatch } = useContext(Store);
@@ -24,6 +26,8 @@ function App() {
   const logoutHandler = () => {
     storeDispatch({ type: 'USER_LOGOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('shippingAddress');
   };
 
   return (
@@ -62,12 +66,12 @@ function App() {
                     <LinkContainer to='/profile'>
                       <NavDropdown.Item>User Profile</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to='/profile'>
+                    <LinkContainer to='/orderHistory'>
                       <NavDropdown.Item>Order History</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Divider />
                     <Link
-                      to='#logout'
+                      to='/'
                       className='dropdown-item'
                       onClick={logoutHandler}
                     >
@@ -88,9 +92,11 @@ function App() {
         <main>
           <Container className='mt-4'>
             <Routes>
-              <Route path='/login' element={<LoginPage />} />
               <Route path='/cart' element={<CartPage />} />
               <Route path='/product/:slug' element={<ProductPage />} />
+              <Route path='/login' element={<LoginPage />} />
+              <Route path='/shipping' element={<ShippingAddressPage />} />
+              <Route path='/payment' element={<PaymentPage />} />
               <Route path='/' element={<HomePage />} />
             </Routes>
           </Container>
