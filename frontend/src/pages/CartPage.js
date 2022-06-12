@@ -40,8 +40,8 @@ function CartPage() {
     storeDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   }
 
-  function checkoutHandler() {
-    navigate('/signin?redirect=/shipping');
+  function checkoutHandler() {    
+    navigate('/login?redirect=/shipping');
   }
 
   return (

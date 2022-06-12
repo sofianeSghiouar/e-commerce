@@ -1,6 +1,20 @@
-import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcryptjs'
 
 const data = {
+  users: [
+    {
+      username: "sofiane",
+      email: "admin@example.com",
+      password: bcrypt.hashSync('1234'),
+      isAdmin: true
+    },
+    {
+      username: "john",
+      email: "user@example.com",
+      password: bcrypt.hashSync('1234'),
+      isAdmin: false
+    }
+  ],
   products: [
     {
       name: 'Nike Slim Shirt',
@@ -77,7 +91,7 @@ const data = {
       numReviews: 15,
       description: 'high quality product',
     },
-  ],
+  ]
 };
 
 export default data;
