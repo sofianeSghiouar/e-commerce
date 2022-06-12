@@ -25,11 +25,3 @@ const routes = [
 
 
 export default createRouter(routes)
-// app.get('/api/products/slug/:slug', async (req, res) => {
-//     const product = await ProductModel.findOne({ slug: req.params.slug });
-//     if (!product) {
-//       return res.status(404).json({ message: 'Product Not Found' });
-//     }
-//     res.json(product);
-//   });
-  

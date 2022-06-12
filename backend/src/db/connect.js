@@ -1,21 +1,17 @@
 import mongoose from 'mongoose';
 
 import data from '../data.js';
-import ProductModel from '../models/product.js';
+import ProductsModel from '../models/product.js';
+import UsersModel from '../models/user.js';
 
-const start = () => {
-  return mongoose
-    .connect(process.env.DB_URL,
-      { useNewUrlParser: true }
-    )
-    .then(async () => {
-      if ((await ProductModel.countDocuments()) < 1) {
-        data.products.map(async (product) => {
-          await ProductModel.create(product);
-        });
-      }
+const start = async () => {
+  try {
+    await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }).then(() => {
       console.log('database connected');
-    });
+    })    
+  } catch (error) {
+    throw new Error(error.message)
+  }
 };
 
 export default start;
