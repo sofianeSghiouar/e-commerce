@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import start from './db/connect.js';
+
 dotenv.config();
 
 import productsRouter from './controllers/products/routes.js';
@@ -21,6 +22,7 @@ app.use('/api', seedRouter);
 app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
+
 
 const PORT = process.env.PORT || 8000;
 
