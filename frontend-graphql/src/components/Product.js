@@ -16,33 +16,42 @@ function Product(props) {
 
   async function addToCartHandler(article) {
     const alreadyInCart = cartItems.find((item) => item._id === article._id);
-
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
-    const { data } = await axios.get(`http://localhost:8000/`, {
+    const result = await axios({
+      url: 'http://localhost:8000/',
+      method: 'post',
       headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify({
+      data: {
         query: `
-        query: {
-          getProductById(${article._id}){
-            name
-            slug
-            image
-            images
-            brand
-            category
-            description
-            price
-            countInStock
-            rating
-            numReviews
-            reviews
-            timestamps
-          }       
-        }
+          query ($id: ID!){
+            getProductById(id: $id){
+              name
+              slug
+              image
+              images
+              brand
+              category
+              description
+              price
+              countInStock
+              rating
+              numReviews
+              reviews{
+                createdAt
+              }
+              createdAt
+            }       
+          }
         `,
-      }),
-    });
-    if (data.countInStock < article.quantity) {
+        variables: { id: article.id },
+      },
+    }).catch((err) => err);
+    const {
+      data: {
+        data: { getProductById },
+      },
+    } = result;
+    if (getProductById.countInStock < article.quantity) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
@@ -51,18 +60,18 @@ function Product(props) {
   }
   return (
     <Card>
-      {/* <Link to={`/product/${product.slug}`}> */}
+      <Link to={`/product/${product.slug}`}>
         <Card.Img
           variant='top'
           src={product.image}
           className='card-img-top'
           alt={product.name}
         />
-      {/* </Link> */}
+      </Link>
       <Card.Body className='product-info'>
-        {/* <Link to={`/product/${product.slug}`}> */}
+        <Link to={`/product/${product.slug}`}>
           <Card.Title>{product.name}</Card.Title>
-        {/* </Link> */}
+        </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>
 

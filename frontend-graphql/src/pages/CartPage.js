@@ -23,10 +23,43 @@ function CartPage() {
   const navigate = useNavigate();
 
   async function updateCartHandler(item, quantity) {
-    const { data } = await axios.get(
-      `http://localhost:8000/api/products/${item._id}`
-    );
-    if (data.countInStock < quantity) {
+    const result = await axios({
+      url: 'http://localhost:8000/',
+      method: 'post',
+      headers: { 'Content-type': 'application/json' },
+      data: {
+        query: `
+          query ($id: ID!){
+            getProductById(id: $id){
+              name
+              slug
+              image
+              images
+              brand
+              category
+              description
+              price
+              countInStock
+              rating
+              numReviews
+              reviews{
+                createdAt
+              }
+              createdAt
+            }       
+          }
+        `,
+        variables: { id: item.id },
+      },
+      
+    }).catch(err=>err.message)
+    const {
+      data: {
+        data: { getProductById },
+      },
+    } = result;
+    console.log('result from CartPage', getProductById)
+    if (getProductById.countInStock < quantity) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
