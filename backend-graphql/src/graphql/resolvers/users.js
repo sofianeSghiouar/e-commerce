@@ -5,12 +5,12 @@ import { generateToken } from '../../utils/generateToken.js';
 
 export default {
   Query: {
-    getUser: async (_, args) => {
-      const user = await UserModel.findOne({ email: args.email });
+    handleLogin: async (_, args) => {
+      const user = await UserModel.findOne({ email: args.loginInput.email });
       if (user) {
-        if (bcrypt.compareSync(args.password, user.password)) {
+        if (bcrypt.compareSync(args.loginInput.password, user.password)) {
           return {
-            _id: user._id,
+            id: user._id,
             username: user.username,
             email: user.email,
             isAdmin: user.isAdmin,

@@ -24,7 +24,8 @@ const reducer = (state, action) => {
 };
 
 function HomePage() {
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, { // wrap reducer in logger() for steps infos
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
+    // wrap reducer in logger() for steps infos
     products: [],
     loading: true,
     error: '',
@@ -34,32 +35,42 @@ function HomePage() {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('http://localhost:8000/', 
-       { headers: {'Content-type': "application/json"},
-      body: JSON.stringify({
-        query: `
-        getProducts {
-          name
-          slug
-          image
-          images
-          brand
-          category
-          description
-          price
-          countInStock
-          rating
-          numReviews
-          reviews
-          timestamps
-        }
-        
-        `
-      })
-      }
-        
-        );
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        const result = await axios({
+          url: 'http://localhost:8000/',
+          method: 'post',
+          headers: { 'Content-type': 'application/json' },
+          data: {
+            query: `
+                query{
+                  getProducts {
+                    id
+                    name
+                    slug
+                    image
+                    images
+                    brand
+                    category
+                    description
+                    price
+                    countInStock
+                    rating
+                    numReviews
+                    reviews {
+                      createdAt
+                    }
+                    createdAt
+                  }
+                }          
+                  `,
+          },
+        }).catch((err) => err.message);
+        const {
+          data: {
+            data: { getProducts },
+          },
+        } = result;
+
+        dispatch({ type: 'FETCH_SUCCESS', payload: getProducts });
       } catch (error) {
         dispatch({ type: 'FETCH_FAIL', payload: error.message });
       }

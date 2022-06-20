@@ -24,17 +24,30 @@ const typeDefs = gql`
     createdAt: String!
   }
   type User {
+    id: ID!
     username: String!
     email: String!
-    password: String!
     isAdmin: Boolean!
     createdAt: String!
   }
+  type UserLogin {
+    id: ID!
+    username: String!
+    email: String!
+    isAdmin: Boolean!
+    token: String!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
-    getProducts: [Product]
-    getProductById(id: ID!): Product
-    getProductBySlug(slug: String): Product
-    getUser(email: String, password: String): User
+    getProducts: [Product]!
+    getProductById(id: ID!): Product!
+    getProductBySlug(slug: String!): Product!
+    handleLogin(loginInput: LoginInput): UserLogin  
   }
 `;
 

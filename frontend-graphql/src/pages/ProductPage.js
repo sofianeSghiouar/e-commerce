@@ -43,10 +43,44 @@ function ProductPage() {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get(
-          `http://localhost:8000/api/products/slug/${slug}`
-        );
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        const result = await axios({
+          url: 'http://localhost:8000/',
+          method: 'post',
+          headers: { 'Content-type': 'application/json' },
+          data: {
+            query: `
+              query ($slug: String!){
+                getProductBySlug(slug: $slug){
+                    id
+                    name
+                    slug
+                    image
+                    images
+                    brand
+                    category
+                    description
+                    price
+                    countInStock
+                    rating
+                    numReviews
+                    reviews {
+                      createdAt
+                    }
+                    createdAt                  
+                }
+              }
+            `,
+            variables: { slug: slug },
+          },
+        });
+        const {
+          data: {
+            data: { getProductBySlug },
+          },
+        } = result;
+        console.log('getProductBySlug from productPage:>> ', getProductBySlug);
+
+        dispatch({ type: 'FETCH_SUCCESS', payload: getProductBySlug });
       } catch (error) {
         dispatch({ type: 'FETCH_FAIL', payload: getErrorMessage(error) });
       }
@@ -55,27 +89,59 @@ function ProductPage() {
   }, [slug]);
 
   const { state, dispatch: storeDispatch } = useContext(Store);
-  const { cart } = state;
+  const {
+    cart: { cartItems },
+  } = state;
+  console.log('cartItems :>> ', cartItems);
 
   const handleAddToCart = async () => {
     setIsItemInCart(true);
-    const alreadyInCart = cart.cartItems.find(
-      (item) => item._id === product._id
-    );
+    const alreadyInCart = cartItems.find((item) => item.id === product.id);
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
-    const { data } = await axios.get(
-      `http://localhost:8000/api/products/${product._id}`
-    );
+    const result = await axios({
+      url: 'http://localhost:8000/',
+      method: 'post',
+      headers: { 'Content-type': 'application/json' },
+      data: {
+        query: `
+          query ($id: ID!){
+            getProductById(id: $id){
+              name
+              slug
+              image
+              images
+              brand
+              category
+              description
+              price
+              countInStock
+              rating
+              numReviews
+              reviews{
+                createdAt
+              }
+              createdAt
+            }       
+          }
+        `,
+        variables: { id: product.id },
+      },
+    }).catch((err) => err);
+    const {
+      data: {
+        data: { getProductById },
+      },
+    } = result;
 
-    if (data.countInStock < quantity) {
+    if (getProductById.countInStock < quantity) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
     const payload = { ...product, quantity };
-    storeDispatch({
+     storeDispatch({
       type: 'CART_ADD_ITEM',
       payload,
-    }); 
+    });
   };
 
   const handleGoToCart = () => {

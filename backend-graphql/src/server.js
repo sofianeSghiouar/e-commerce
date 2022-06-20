@@ -9,6 +9,7 @@ dotenv.config();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  cors: true
 });
 
 const PORT = process.env.PORT || 8000;
