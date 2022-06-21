@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { Store } from '../Store.js';
-import getErrorMessage from '../utils/errorsHandler.js';
 import queryFetch from '../utils/queryHandler.js';
 
 function LoginPage() {
@@ -35,22 +33,26 @@ function LoginPage() {
               }
       `,
       variables: { loginInput: { email, password } },
+      method: 'post',
     };
 
     try {
       const result = await queryFetch(queryOptions);
-      const {
-        data: { data:{ userLogin }},
-      } = result;
-      console.log('userLogin :>> ', userLogin);
+      if (result) {
+        const {
+          data: {
+            data: { userLogin },
+          },
+        } = result;
 
-      if (userLogin) {
-        storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
-        localStorage.setItem('userInfo', JSON.stringify(userLogin));
-        navigate(redirect || '/');
+        if (userLogin) {
+          storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
+          localStorage.setItem('userInfo', JSON.stringify(userLogin));
+          navigate(redirect || '/');
+        }
       }
     } catch (error) {
-      toast.error(getErrorMessage(error));
+      console.error(error.message);
     }
   };
 

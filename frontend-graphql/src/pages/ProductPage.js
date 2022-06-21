@@ -14,6 +14,7 @@ import Loading from '../components/Loading';
 import Message from '../components/Message';
 import getErrorMessage from '../utils/errorsHandler';
 import { Store } from '../Store';
+import queryFetch from '../utils/queryHandler';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -78,7 +79,7 @@ function ProductPage() {
             data: { getProductBySlug },
           },
         } = result;
-        console.log('getProductBySlug from productPage:>> ', getProductBySlug);
+        console.log('productPage fetch getProductBySlug:>> ', getProductBySlug);
 
         dispatch({ type: 'FETCH_SUCCESS', payload: getProductBySlug });
       } catch (error) {
@@ -92,18 +93,14 @@ function ProductPage() {
   const {
     cart: { cartItems },
   } = state;
-  console.log('cartItems :>> ', cartItems);
 
   const handleAddToCart = async () => {
     setIsItemInCart(true);
     const alreadyInCart = cartItems.find((item) => item.id === product.id);
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
-    const result = await axios({
-      url: 'http://localhost:8000/',
-      method: 'post',
-      headers: { 'Content-type': 'application/json' },
-      data: {
-        query: `
+
+    const queryOptions = {
+      query: `
           query ($id: ID!){
             getProductById(id: $id){
               name
@@ -124,24 +121,30 @@ function ProductPage() {
             }       
           }
         `,
-        variables: { id: product.id },
-      },
-    }).catch((err) => err);
-    const {
-      data: {
-        data: { getProductById },
-      },
-    } = result;
+      variables: { id: product.id },
+    };
 
-    if (getProductById.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
-      return;
-    }
-    const payload = { ...product, quantity };
-     storeDispatch({
-      type: 'CART_ADD_ITEM',
-      payload,
-    });
+    await queryFetch(queryOptions)
+      .then((result) => {
+        if (result) {
+          const {
+            data: {
+              data: { getProductById },
+            },
+          } = result;
+
+          if (getProductById.countInStock < quantity) {
+            window.alert('Sorry. Product is out of stock');
+            return;
+          }
+          const payload = { ...product, quantity };
+           storeDispatch({
+            type: 'CART_ADD_ITEM',
+            payload,
+          });
+        }
+      })
+      .catch((error) => console.log(error.message));
   };
 
   const handleGoToCart = () => {

@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from 'react';
-import axios from 'axios';
 // import logger from 'use-reducer-logger';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
@@ -9,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import Product from '../components/Product';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
+import queryFetch from '../utils/queryHandler';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -34,46 +34,45 @@ function HomePage() {
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
-      try {
-        const result = await axios({
-          url: 'http://localhost:8000/',
-          method: 'post',
-          headers: { 'Content-type': 'application/json' },
-          data: {
-            query: `
-                query{
-                  getProducts {
-                    id
-                    name
-                    slug
-                    image
-                    images
-                    brand
-                    category
-                    description
-                    price
-                    countInStock
-                    rating
-                    numReviews
-                    reviews {
-                      createdAt
-                    }
-                    createdAt
-                  }
-                }          
-                  `,
-          },
-        }).catch((err) => err.message);
-        const {
-          data: {
-            data: { getProducts },
-          },
-        } = result;
-
-        dispatch({ type: 'FETCH_SUCCESS', payload: getProducts });
-      } catch (error) {
-        dispatch({ type: 'FETCH_FAIL', payload: error.message });
-      }
+      const queryOptions = {
+        query: `
+        query{
+          getProducts {
+            id
+            name
+            slug
+            image
+            images
+            brand
+            category
+            description
+            price
+            countInStock
+            rating
+            numReviews
+            reviews {
+              createdAt
+            }
+            createdAt
+          }
+        }          
+          `,
+      };
+      queryFetch(queryOptions)
+        .then((result) => {
+          if (result.hasOwnProperty('data')) {
+            const {
+              data: {
+                data: { getProducts },
+              },
+            } = result;
+            return dispatch({ type: 'FETCH_SUCCESS', payload: getProducts });
+          }
+          dispatch({ type: 'FETCH_FAIL', payload: result.error.message });
+        })
+        .catch((error) => {
+          console.log('error :>> ', error);
+        });
     };
     fetchProducts();
   }, []);
