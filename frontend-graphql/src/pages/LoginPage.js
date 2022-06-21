@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
@@ -6,32 +5,50 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Store } from '../Store.js';
-import getErrorMessage from '../utils.js';
+import getErrorMessage from '../utils/errorsHandler.js';
+import queryFetch from '../utils/queryHandler.js';
 
 function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { userInfo } = state;
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    const queryOptions = {
+      query: `
+      query($loginInput: LoginInput){
+                userLogin(loginInput: $loginInput){
+                  id
+                  username
+                  email
+                  isAdmin
+                  token
+                }
+              }
+      `,
+      variables: { loginInput: { email, password } },
+    };
 
     try {
-      const { data } = await axios.post(
-        'http://localhost:8000/api/users/login',
-        {
-          email,
-          password,
-        }
-      );
-      storeDispatch({ type: 'USER_LOGIN', payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
+      const result = await queryFetch(queryOptions);
+      const {
+        data: { data:{ userLogin }},
+      } = result;
+      console.log('userLogin :>> ', userLogin);
+
+      if (userLogin) {
+        storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
+        localStorage.setItem('userInfo', JSON.stringify(userLogin));
+        navigate(redirect || '/');
+      }
     } catch (error) {
       toast.error(getErrorMessage(error));
     }

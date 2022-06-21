@@ -12,7 +12,7 @@ import Image from 'react-bootstrap/esm/Image';
 import Rating from '../components/Rating';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
-import getErrorMessage from '../utils';
+import getErrorMessage from '../utils/errorsHandler';
 import { Store } from '../Store';
 
 const reducer = (state, action) => {

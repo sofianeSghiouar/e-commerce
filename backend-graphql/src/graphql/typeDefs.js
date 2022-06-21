@@ -47,7 +47,7 @@ const typeDefs = gql`
     getProducts: [Product]!
     getProductById(id: ID!): Product!
     getProductBySlug(slug: String!): Product!
-    handleLogin(loginInput: LoginInput): UserLogin  
+    userLogin(loginInput: LoginInput): UserLogin  
   }
 `;
 
