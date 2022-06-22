@@ -124,27 +124,26 @@ function ProductPage() {
       variables: { id: product.id },
     };
 
-    await queryFetch(queryOptions)
+    queryFetch(queryOptions)
       .then((result) => {
-        if (result) {
-          const {
-            data: {
-              data: { getProductById },
-            },
-          } = result;
-
+        const {
+          data: {
+            data: { getProductById },
+          },
+        } = result;
+        if (getProductById) {
           if (getProductById.countInStock < quantity) {
             window.alert('Sorry. Product is out of stock');
             return;
           }
           const payload = { ...product, quantity };
-           storeDispatch({
+          storeDispatch({
             type: 'CART_ADD_ITEM',
             payload,
           });
         }
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => error.message);
   };
 
   const handleGoToCart = () => {

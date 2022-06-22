@@ -33,27 +33,23 @@ function LoginPage() {
               }
       `,
       variables: { loginInput: { email, password } },
-      method: 'post',
     };
 
-    try {
-      const result = await queryFetch(queryOptions);
-      if (result) {
+    queryFetch(queryOptions)
+      .then((result) => {
         const {
           data: {
             data: { userLogin },
           },
         } = result;
-
         if (userLogin) {
+          console.log('result login:>> ', result);
           storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
           localStorage.setItem('userInfo', JSON.stringify(userLogin));
           navigate(redirect || '/');
         }
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
+      })
+      .catch((error) => error.message);
   };
 
   useEffect(() => {
@@ -92,7 +88,9 @@ function LoginPage() {
             </Col>
             <Col className='mb-3 text-center '>
               New to The Good Deal?{' '}
-              <Link to={`/login?redirect=${redirect}`}>Create an account</Link>
+              <Link to={`/register?redirect=${redirect}`}>
+                Create an account
+              </Link>
             </Col>
           </Row>
         </Form>

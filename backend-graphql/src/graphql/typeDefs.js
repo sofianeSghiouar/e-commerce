@@ -37,17 +37,31 @@ const typeDefs = gql`
     isAdmin: Boolean!
     token: String!
   }
+  type UserRegister {
+    id: ID!
+    username: String!
+    email: String!
+    isAdmin: Boolean!
+    createdAt: String!
+  }
 
   input LoginInput {
     email: String!
     password: String!
+  }
+  input RegisterInput {
+    username: String!
+    email: String!
+    password: String!
+    confirmPassword: String!
   }
 
   type Query {
     getProducts: [Product]!
     getProductById(id: ID!): Product!
     getProductBySlug(slug: String!): Product!
-    userLogin(loginInput: LoginInput): UserLogin  
+    userLogin(loginInput: LoginInput): UserLogin
+    userRegister(registerInput: RegisterInput): UserRegister
   }
 `;
 

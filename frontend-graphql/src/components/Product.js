@@ -41,21 +41,23 @@ function Product(props) {
     `,
       variables: { id: article.id },
     };
-    queryFetch(queryOptions).then((result) => {
-      if (result) {
+    queryFetch(queryOptions)
+      .then((result) => {
         const {
           data: {
             data: { getProductById },
           },
         } = result;
-        if (getProductById.countInStock < article.quantity) {
-          window.alert('Sorry. Product is out of stock');
-          return;
+        if (getProductById) {
+          if (getProductById.countInStock < article.quantity) {
+            window.alert('Sorry. Product is out of stock');
+            return;
+          }
+          const payload = { ...article, quantity };
+          storeDispatch({ type: 'CART_ADD_ITEM', payload });
         }
-        const payload = { ...article, quantity };
-        storeDispatch({ type: 'CART_ADD_ITEM', payload });
-      }
-    });
+      })
+      .catch((error) => error.message);
   }
   return (
     <Card>

@@ -60,19 +60,17 @@ function HomePage() {
       };
       queryFetch(queryOptions)
         .then((result) => {
-          if (result.hasOwnProperty('data')) {
-            const {
-              data: {
-                data: { getProducts },
-              },
-            } = result;
+          const {
+            data: {
+              data: { getProducts },
+            },
+          } = result;
+          if (getProducts) {
             return dispatch({ type: 'FETCH_SUCCESS', payload: getProducts });
           }
           dispatch({ type: 'FETCH_FAIL', payload: result.error.message });
         })
-        .catch((error) => {
-          console.log('error :>> ', error);
-        });
+        .catch((error) => error.message);
     };
     fetchProducts();
   }, []);

@@ -14,6 +14,7 @@ import {
 
 import { Store } from '../Store';
 import Message from '../components/Message';
+import queryFetch from '../utils/queryHandler';
 
 function CartPage() {
   const { state, dispatch: storeDispatch } = useContext(Store);
@@ -23,57 +24,59 @@ function CartPage() {
   const navigate = useNavigate();
 
   async function updateCartHandler(item, quantity) {
-    const result = await axios({
-      url: 'http://localhost:8000/',
-      method: 'post',
-      headers: { 'Content-type': 'application/json' },
-      data: {
-        query: `
-          query ($id: ID!){
-            getProductById(id: $id){
-              name
-              slug
-              image
-              images
-              brand
-              category
-              description
-              price
-              countInStock
-              rating
-              numReviews
-              reviews{
-                createdAt
-              }
+    const queryOptions = {
+      query: `
+        query ($id: ID!){
+          getProductById(id: $id){
+            name
+            slug
+            image
+            images
+            brand
+            category
+            description
+            price
+            countInStock
+            rating
+            numReviews
+            reviews{
               createdAt
-            }       
+            }
+            createdAt
+          }       
+        }
+      `,
+      variables: { id: item.id },
+    };
+    queryFetch(queryOptions)
+      .then((result) => {
+        const {
+          data: {
+            data: { getProductById },
+          },
+        } = result;
+        if (getProductById) {
+          console.log('result from CartPage', getProductById);
+          if (getProductById.countInStock < quantity) {
+            window.alert('Sorry. Product is out of stock');
+            return;
           }
-        `,
-        variables: { id: item.id },
-      },
-      
-    }).catch(err=>err.message)
-    const {
-      data: {
-        data: { getProductById },
-      },
-    } = result;
-    console.log('result from CartPage', getProductById)
-    if (getProductById.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
-      return;
-    }
-    storeDispatch({
-      type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
-    });
+          storeDispatch({
+            type: 'CART_ADD_ITEM',
+            payload: { ...item, quantity },
+          });
+        }
+      })
+      .catch((error) => {
+        return error.message;
+      });
   }
 
   function removeItemHandler(item) {
     storeDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   }
 
-  function checkoutHandler() {    
+  function checkoutHandler() {
     navigate('/login?redirect=/shipping');
   }
 

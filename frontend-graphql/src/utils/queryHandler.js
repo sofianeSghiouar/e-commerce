@@ -14,12 +14,14 @@ export default async function queryFetch({
       headers: { 'content-type': 'application/json' },
       data: { query, variables },
     });
-    console.log('result :>> ', result);
-    if (result.data.hasOwnProperty('error')) {
-      throw new Error(result.data.error);
+    console.log('result pre:>> ', result);
+    if (result.data.hasOwnProperty('errors')) {
+      console.log('result errors:>> ', result.data.errors);
+      return toast.error(getErrorMessage(result.data.errors));
     }
     return result;
   } catch (error) {
+    console.log('error queryHandler:>> ', error);
     toast.error(getErrorMessage(error));
   }
 }

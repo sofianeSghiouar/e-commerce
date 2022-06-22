@@ -18,6 +18,7 @@ import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import ShippingAddressPage from './pages/ShippingAddressPage';
 import PaymentPage from './pages/PaymentPage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   const { state, dispatch: storeDispatch } = useContext(Store);
@@ -95,6 +96,7 @@ function App() {
               <Route path='/cart' element={<CartPage />} />
               <Route path='/product/:slug' element={<ProductPage />} />
               <Route path='/login' element={<LoginPage />} />
+              <Route path='/register' element={<RegisterPage />} />
               <Route path='/shipping' element={<ShippingAddressPage />} />
               <Route path='/payment' element={<PaymentPage />} />
               <Route path='/' element={<HomePage />} />
