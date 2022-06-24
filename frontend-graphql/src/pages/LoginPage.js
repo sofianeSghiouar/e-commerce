@@ -1,40 +1,59 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { Store } from '../Store.js';
-import getErrorMessage from '../utils.js';
+import queryFetch from '../utils/queryHandler.js';
 
 function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { userInfo } = state;
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    const queryOptions = {
+      query: `
+      mutation($loginInput: LoginInput){
+                userLogin(loginInput: $loginInput){
+                  id
+                  username
+                  email
+                  isAdmin
+                  token
+                }
+              }
+      `,
+      variables: { loginInput: { email, password } },
+    };
 
-    try {
-      const { data } = await axios.post(
-        'http://localhost:8000/api/users/login',
-        {
-          email,
-          password,
+    queryFetch(queryOptions)
+      .then(
+        ({
+          data: {
+            data: { userLogin },
+          },
+        }) => {
+          if (userLogin) {
+            console.log('result userLogin:>> ', userLogin);
+            storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
+            localStorage.setItem('userInfo', JSON.stringify(userLogin));
+            navigate(redirect || '/');
+          }
         }
-      );
-      storeDispatch({ type: 'USER_LOGIN', payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
-    } catch (error) {
-      toast.error(getErrorMessage(error));
-    }
+      )
+      .catch((error) => {
+        console.log('error.message :>> ', error);
+        return error.message
+      });
   };
 
   useEffect(() => {
@@ -73,7 +92,9 @@ function LoginPage() {
             </Col>
             <Col className='mb-3 text-center '>
               New to The Good Deal?{' '}
-              <Link to={`/login?redirect=${redirect}`}>Create an account</Link>
+              <Link to={`/register?redirect=${redirect}`}>
+                Create an account
+              </Link>
             </Col>
           </Row>
         </Form>

@@ -6,21 +6,21 @@ export default {
       try {
         return await ProductModel.find();
       } catch (err) {
-        return new Error(err.message);
+        return err;
       }
     },
     getProductBySlug: async (_, args) => {
       try {
         return await ProductModel.findOne({ slug: args.slug });
       } catch (err) {
-        return new Error(err.message);
+        return err;
       }
     },
     getProductById: async (_, args) => {
       try {
         return await ProductModel.findById(args.id);
       } catch (err) {
-        return new Error(err.message);
+        return err;
       }
     },
   },

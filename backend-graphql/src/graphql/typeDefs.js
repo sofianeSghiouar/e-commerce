@@ -36,18 +36,35 @@ const typeDefs = gql`
     email: String!
     isAdmin: Boolean!
     token: String!
+    createdAt: String!
+  }
+  type UserRegister {
+    id: ID!
+    username: String!
+    email: String!
+    isAdmin: Boolean!
+    createdAt: String!
   }
 
   input LoginInput {
     email: String!
     password: String!
   }
+  input RegisterInput {
+    username: String!
+    email: String!
+    password: String!
+    confirmPassword: String!
+  }
 
   type Query {
     getProducts: [Product]!
     getProductById(id: ID!): Product!
     getProductBySlug(slug: String!): Product!
-    handleLogin(loginInput: LoginInput): UserLogin  
+  }
+  type Mutation {
+    userLogin(loginInput: LoginInput): UserLogin
+    userRegister(registerInput: RegisterInput): UserRegister
   }
 `;
 
