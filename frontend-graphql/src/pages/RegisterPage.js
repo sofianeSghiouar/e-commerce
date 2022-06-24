@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Store } from '../Store';
 import queryFetch from '../utils/queryHandler';
 
@@ -17,18 +18,30 @@ function RegisterPage() {
   const redirect = redirectInUrl ? redirectInUrl : '/';
   const navigate = useNavigate();
 
-  const {state, dispach: storeDispatch} = useContext(Store)
+  const { state, dispatch: storeDispatch } = useContext(Store);
 
-  const {userInfo} = state;
+  const {
+    userInfo,
+    cart: { cartItems },
+  } = state;
 
-  // TODO redirect at home in useEffect() if the user is already logged by checking userInfo value
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, userInfo, redirect]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error('Passwords does not match');
+      return;
+    }
     const queryOptions = {
       query: `
-        query($registerInput: RegisterInput){
+        mutation($registerInput: RegisterInput){
             userRegister(registerInput: $registerInput){
+                id
                 username
                 email
                 isAdmin
@@ -38,23 +51,35 @@ function RegisterPage() {
       variables: {
         registerInput: {
           username: name,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
+          email,
+          password,
+          confirmPassword,
         },
       },
     };
 
     queryFetch(queryOptions)
-      .then((result) => {
-        if (result) {
-          console.log('result :>> ', result);
-          // TODO dispatch payload in store with type 'USER_LOGIN'
+      .then(
+        ({
+          data: {
+            data: { userRegister },
+          },
+        }) => {
+          console.log('userRegister RegisterPage:>> ', userRegister);
+          if (userRegister) {
+            console.log('result :>> ', userRegister);
+
+            storeDispatch({ type: 'USER_REGISTER', payload: userRegister });
+            localStorage.setItem('userInfo', JSON.stringify(userRegister));
+            cartItems.length > 0
+              ? navigate('/shipping')
+              : navigate(redirect || '/');
+            return;
+          }
+          console.log('result data userRegister when false:>> ', userRegister);
         }
-        console.log('result false:>> ', result);
-      })
+      )
       .catch((error) => error.message);
-      navigate('/shipping')
   };
 
   return (
@@ -81,7 +106,11 @@ function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='password'>
+          <Form.Group
+            className='mb-3'
+            controlId='password'
+            autoComplete='new-password'
+          >
             <Form.Label>Password</Form.Label>
             <Form.Control
               type='password'
@@ -89,7 +118,11 @@ function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className='mb-5' controlId='confirmPassword'>
+          <Form.Group
+            className='mb-5'
+            controlId='confirmPassword'
+            autoComplete='new-password'
+          >
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type='password'

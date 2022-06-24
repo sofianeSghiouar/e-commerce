@@ -22,7 +22,7 @@ function LoginPage() {
     e.preventDefault();
     const queryOptions = {
       query: `
-      query($loginInput: LoginInput){
+      mutation($loginInput: LoginInput){
                 userLogin(loginInput: $loginInput){
                   id
                   username
@@ -36,20 +36,24 @@ function LoginPage() {
     };
 
     queryFetch(queryOptions)
-      .then((result) => {
-        const {
+      .then(
+        ({
           data: {
             data: { userLogin },
           },
-        } = result;
-        if (userLogin) {
-          console.log('result login:>> ', result);
-          storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
-          localStorage.setItem('userInfo', JSON.stringify(userLogin));
-          navigate(redirect || '/');
+        }) => {
+          if (userLogin) {
+            console.log('result userLogin:>> ', userLogin);
+            storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
+            localStorage.setItem('userInfo', JSON.stringify(userLogin));
+            navigate(redirect || '/');
+          }
         }
-      })
-      .catch((error) => error.message);
+      )
+      .catch((error) => {
+        console.log('error.message :>> ', error);
+        return error.message
+      });
   };
 
   useEffect(() => {
