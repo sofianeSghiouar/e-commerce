@@ -24,9 +24,9 @@ function Product(props) {
     if (data) {
       const { getProducts } = data;
       const currentProduct = getProducts.find(
-        (product) => product.id === article._id
+        (product) => product.id === article.id
       );
-      const alreadyInCart = cartItems.find((item) => item._id === article._id);
+      const alreadyInCart = cartItems.find((item) => item.id === article.id);
       const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
 
       if (currentProduct.countInStock < article.quantity) {
