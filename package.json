@@ -10,10 +10,21 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"/**/*.{js}\" --write"
+    "prettier": "prettier \"/**/*.js\" --write"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "/**/*.js": [
+      "prettier --write"
+    ],
+    "*.js": [
+      "eslint . --fix"
+    ],
+    "cd frontend/package.json": [
+      "npm run prettier --write && npm run eslint . --fix"
+    ],
+    "cd frontend-graphql/package.json": [
+      "npm run prettier --write && npm run eslint . --fix"
+    ]
   },
   "dependencies": {
     "yarn": "^1.22.19"
@@ -23,7 +34,6 @@
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-jest": "26.1.1",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.30.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "prettier": "^2.5.1"
