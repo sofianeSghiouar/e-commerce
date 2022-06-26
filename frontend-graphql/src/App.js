@@ -19,7 +19,18 @@ import LoginPage from './pages/LoginPage';
 import ShippingAddressPage from './pages/ShippingAddressPage';
 import PaymentPage from './pages/PaymentPage';
 
-function App() {
+
+
+
+
+
+
+
+
+
+
+
+                      function App() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
