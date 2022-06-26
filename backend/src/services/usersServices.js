@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-import UserModel from '../models/user.js'
-import { generateToken } from '../utils/generateToken.js'
+import UserModel from '../models/user.js';
+import { generateToken } from '../utils/generateToken.js';
 
 export default class UserServices {
   async handleLogin(password, email, res) {
