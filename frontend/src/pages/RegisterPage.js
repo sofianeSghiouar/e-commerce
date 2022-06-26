@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useContext } from 'react'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Store } from '../Store'
 import getErrorMessage from '../utils'
-function RegisterPage() {
+function RegisterPage() { 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

@@ -1,12 +1,12 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
-import { Helmet } from 'react-helmet-async';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
+import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm'
+import { Helmet } from 'react-helmet-async'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import { Store } from '../Store.js';
-import getErrorMessage from '../utils.js';
+import { Store } from '../Store.js'
+import getErrorMessage from '../utils.js'
 
 function LoginPage() {
   const { search } = useLocation();
