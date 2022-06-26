@@ -9,11 +9,11 @@ const brandSchema = new mongoose.Schema({
       products: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'products',
-        },
-      ],
-    },
-  ],
+          ref: 'products'
+        }
+      ]
+    }
+  ]
 });
 
 export default mongoose.model('brands', brandSchema);

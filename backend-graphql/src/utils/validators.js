@@ -26,7 +26,7 @@ export const validateRegisterInput = (
   }
   return {
     errors,
-    valid: Object.keys(errors).length < 1,
+    valid: Object.keys(errors).length < 1
   };
 };
 export const validateLoginInput = (email, password) => {
@@ -45,6 +45,6 @@ export const validateLoginInput = (email, password) => {
   }
   return {
     errors,
-    valid: Object.keys(errors).length < 1,
+    valid: Object.keys(errors).length < 1
   };
 };

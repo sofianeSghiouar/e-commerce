@@ -2,11 +2,11 @@ import productResolvers from './products.js';
 import userResolvers from './users.js';
 
 export default {
-  Query: { 
-    ...productResolvers.Query,
-    //  ...userResolvers.Query 
-    },
-    Mutation: {
-      ...userResolvers.Mutation
-    }
+  Query: {
+    ...productResolvers.Query
+    //  ...userResolvers.Query
+  },
+  Mutation: {
+    ...userResolvers.Mutation
+  }
 };

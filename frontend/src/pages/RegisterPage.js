@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import { Helmet } from 'react-helmet-async';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { Store } from '../Store';
-import getErrorMessage from '../utils';
+import React, { useEffect, useState } from 'react'
+import { useContext } from 'react'
+import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+import { Helmet } from 'react-helmet-async'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { Store } from '../Store'
+import getErrorMessage from '../utils'
 function RegisterPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
+  const { search } = useLocation()
+  const redirectInUrl = new URLSearchParams(search).get('redirect')
+  const redirect = redirectInUrl ? redirectInUrl : '/'
   const navigate = useNavigate();
 
   const { state, dispatch: storeDispatch } = useContext(Store);

@@ -4,9 +4,13 @@ export class UsersController {
   usersServices = new UserServices();
 
   async loginService({ body }, res) {
-    const { password, email } = body
-    const userLogin = await this.usersServices.handleLogin(password, email, res);
-    return userLogin
+    const { password, email } = body;
+    const userLogin = await this.usersServices.handleLogin(
+      password,
+      email,
+      res
+    );
+    return userLogin;
   }
 
   async registerService({ body }) {

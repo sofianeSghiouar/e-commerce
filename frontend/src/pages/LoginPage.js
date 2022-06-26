@@ -10,14 +10,14 @@ import getErrorMessage from '../utils.js';
 
 function LoginPage() {
   const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const redirectInUrl = new URLSearchParams(search).get('redirect')
+  const redirect = redirectInUrl ? redirectInUrl : '/'
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const { state, dispatch: storeDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const { state, dispatch: storeDispatch } = useContext(Store)
+  const { userInfo } = state
   const submitHandler = async (e) => {
     e.preventDefault();
 

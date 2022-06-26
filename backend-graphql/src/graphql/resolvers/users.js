@@ -5,7 +5,7 @@ import UserModel from '../../models/user.js';
 import { generateToken } from '../../utils/generateToken.js';
 import {
   validateLoginInput,
-  validateRegisterInput,
+  validateRegisterInput
 } from '../../utils/validators.js';
 
 export default {
@@ -31,7 +31,7 @@ export default {
       return {
         id: user._id,
         ...user._doc,
-        token,
+        token
       };
     },
     userRegister: async (
@@ -56,7 +56,7 @@ export default {
           username,
           email,
           password: bcrypt.hashSync(password),
-          createdAt: new Date().toISOString(),
+          createdAt: new Date().toISOString()
         });
         const result = await newUser.save();
         const token = generateToken(result);
@@ -64,11 +64,11 @@ export default {
         return {
           ...result._doc,
           id: result._id,
-          token,
+          token
         };
       } catch (error) {
         throw new Error(error.message);
       }
-    },
-  },
+    }
+  }
 };

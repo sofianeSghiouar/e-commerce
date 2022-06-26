@@ -12,7 +12,7 @@ const routes = [
     path: '/users/register',
     method: 'POST',
     handler: usersController.registerService.bind(usersController)
-  },
+  }
 ];
 
 export default createRouter(routes);

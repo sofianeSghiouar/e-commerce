@@ -10,10 +10,15 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"/**/*.{js}\" --write"
+    "prettier": "prettier \"/**/*.js\" --write"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "/**/*.{ts,js,css}": [
+      "prettier --write "
+    ],
+    "*.{js,ts}": [
+      "eslint . --fix"
+    ]
   },
   "dependencies": {
     "yarn": "^1.22.19"
