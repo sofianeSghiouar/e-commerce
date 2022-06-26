@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm'
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,16 +8,16 @@ import { toast } from 'react-toastify';
 import { Store } from '../Store.js';
 import getErrorMessage from '../utils.js';
 
-      function LoginPage() {
+function LoginPage() {
   const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect')
-  const redirect = redirectInUrl ? redirectInUrl : '/'
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const redirectInUrl = new URLSearchParams(search).get('redirect');
+  const redirect = redirectInUrl ? redirectInUrl : '/';
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const { state, dispatch: storeDispatch } = useContext(Store)
-  const { userInfo } = state
+  const { state, dispatch: storeDispatch } = useContext(Store);
+  const { userInfo } = state;
   const submitHandler = async (e) => {
     e.preventDefault();
 
