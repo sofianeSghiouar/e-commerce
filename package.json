@@ -13,12 +13,7 @@
     "prettier": "prettier \"/**/*.{js}\" --write"
   },
   "lint-staged": {
-    "{src}/*.{js,css}": [
-      "prettier --write"
-    ],
-    "*.{js}": [
-      "eslint . --ext .js --fix"
-    ]
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "yarn": "^1.22.19"
@@ -28,6 +23,7 @@
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-jest": "26.1.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.30.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "prettier": "^2.5.1"
