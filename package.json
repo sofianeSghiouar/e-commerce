@@ -19,6 +19,9 @@
     "*.js": [
       "eslint . --fix"
     ],
+    "cd frontend/package.json": [
+      "npm run prettier --write && npm run eslint . --fix"
+    ],
     "cd frontend-graphql/package.json": [
       "npm run prettier --write && npm run eslint . --fix"
     ]
