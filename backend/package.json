@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "devStart": "nodemon ./src/server.js"
+    "start": "nodemon dist/index.js",
+    "devStart": "nodemon ./src/server.js",
+    "start:db": "docker compose up -d mongo",
+    "build": "docker compose build"    
   },
   "keywords": [],
   "author": "",
@@ -19,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.6",
     "statuses": "^2.0.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "nodemon": "^2.0.16",
