@@ -7,6 +7,7 @@ import typeDefs from './graphql/typeDefs.js';
 import resolvers from './graphql/resolvers/index.js';
 
 dotenv.config();
+// comment test
 
 const server = new ApolloServer({
   typeDefs,

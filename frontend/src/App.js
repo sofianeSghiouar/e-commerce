@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap/esm';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+// comment test
 import { Store } from './Store';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
