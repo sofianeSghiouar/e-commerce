@@ -17,13 +17,13 @@ export function createHandler({ handler, responseStatus = 200 }) {
       if (res !== result) {
         res.status(responseStatus).json(result);
       }
-      result
+      result;
     } catch (e) {
       return res.status(e.status || 500).json({
         name: e.name || 'INTERNAL_ERROR',
         message: e.message,
         status: e.status || 500,
-        stack: process.env.NODE_ENV !== 'production' ? e.stack : null,
+        stack: process.env.NODE_ENV !== 'production' ? e.stack : null
       });
     }
   });

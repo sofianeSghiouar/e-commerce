@@ -24,10 +24,11 @@ const reducer = (state, action) => {
 };
 
 function HomePage() {
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, { // wrap reducer in logger() for steps infos
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
+    // wrap reducer in logger() for steps infos
     products: [],
     loading: true,
-    error: '',
+    error: ''
   });
 
   useEffect(() => {

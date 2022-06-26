@@ -33,7 +33,7 @@ function ProductPage() {
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     product: [],
     loading: true,
-    error: '',
+    error: ''
   });
   const [isItemInCart, setIsItemInCart] = useState(false);
   const params = useParams();
@@ -74,8 +74,8 @@ function ProductPage() {
     const payload = { ...product, quantity };
     storeDispatch({
       type: 'CART_ADD_ITEM',
-      payload,
-    }); 
+      payload
+    });
   };
 
   const handleGoToCart = () => {

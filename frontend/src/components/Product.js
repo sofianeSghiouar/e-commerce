@@ -11,9 +11,9 @@ function Product(props) {
   const { product } = props;
   const { state, dispatch: storeDispatch } = useContext(Store);
   const {
-    cart: { cartItems },
+    cart: { cartItems }
   } = state;
-  
+
   async function addToCartHandler(article) {
     const alreadyInCart = cartItems.find((item) => item._id === article._id);
 
@@ -25,7 +25,7 @@ function Product(props) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
-    const payload = { ...article, quantity }
+    const payload = { ...article, quantity };
     storeDispatch({ type: 'CART_ADD_ITEM', payload });
   }
   return (

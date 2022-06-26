@@ -1,16 +1,12 @@
 {
-  "name": "backend",
+  "name": "e-commerce",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "private": true,
   "scripts": {
-    "start": "nodemon dist/index.js",
-    "devStart": "nodemon ./src/server.js",
-    "start:db": "docker compose up -d mongo",
-    "build": "docker compose build",
-    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "is-ci || husky install",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
@@ -24,19 +20,7 @@
       "eslint . --ext .js --fix"
     ]
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.3.6",
-    "statuses": "^2.0.1",
-    "uuid": "^8.3.2",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
@@ -46,8 +30,16 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
-    "nodemon": "^2.0.16",
-    "prettier": "^2.5.1",
-    "typescript": "^4.7.3"
-  }
+    "prettier": "^2.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofianeSghiouar/e-commerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sofianeSghiouar/e-commerce/issues"
+  },
+  "homepage": "https://github.com/sofianeSghiouar/e-commerce#readme"
 }

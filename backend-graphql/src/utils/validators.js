@@ -11,7 +11,7 @@ export const validateRegisterInput = (
   if (email.trim() === '') {
     errors.email = 'Email field must not be emptpy';
   } else {
-    const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const regEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!email.match(regEx)) {
       errors.email = 'Email must be a valid email adress';
     }
@@ -34,7 +34,7 @@ export const validateLoginInput = (email, password) => {
   if (email.trim() === '') {
     errors.email = 'Email field must not be emptpy';
   } else {
-    const regEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const regEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!email.match(regEx)) {
       errors.email = 'Email must be a valid email adress';
     }

@@ -1,6 +1,6 @@
-version: "1"
-services: 
-  server: 
+version: '1'
+services:
+  server:
     image: thegooddeal1
     build:
       context: .
@@ -8,16 +8,16 @@ services:
     container_name: version1
     environment:
       - DB_URL=mongodb+srv://thegooddeal:JtiMPgFBGQ6yY0MS@thegooddeal.rmmdg.mongodb.net/thegoodplan?retryWrites=true&w=majority
-    ports: 
-     - "8000:8000"
-    depends_on: 
-      - mongo    
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mongo
   mongo:
-    image: mongo:4.1 
+    image: mongo:4.1
     restart: always
     volumes:
       - mdb-data2:/data/db
     ports:
-      - "27017:27017"
-volumes: 
-  mdb-data2: 
+      - '27017:27017'
+volumes:
+  mdb-data2:
