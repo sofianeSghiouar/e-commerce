@@ -13,6 +13,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers
 });
+const test = 'diddf';
 
 const PORT = process.env.PORT || 8000;
 
