@@ -10,8 +10,8 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"{src}/**/*.{js}\" --write"
-  },
+    "prettier": "prettier \"/**/*.{js}\" --write"
+    },
   "lint-staged": {
     "{src}/*.{js,css}": [
       "prettier --write"

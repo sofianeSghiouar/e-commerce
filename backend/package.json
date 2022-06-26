@@ -17,10 +17,10 @@
     "prettier": "prettier \"{src}/**/*.{js}\" --write"
   },
   "lint-staged": {
-    "{src}/*.{js,css}": [
+    "src/*.{js,css}": [
       "prettier --write"
     ],
-    "*.{js}": [
+    "*.js": [
       "eslint . --ext .js --fix"
     ]
   },
