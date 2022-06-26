@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Col from 'react-bootstrap/esm/Col';
@@ -12,62 +11,32 @@ import Image from 'react-bootstrap/esm/Image';
 import Rating from '../components/Rating';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
-import getErrorMessage from '../utils';
 import { Store } from '../Store';
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true };
-    case 'FETCH_SUCCESS':
-      return { ...state, product: action.payload, loading: false };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+import { useQuery } from '@apollo/client';
+import Queries from '../utils/graphql/gqlQueries';
 
 function ProductPage() {
-  const navigate = useNavigate();
-  const [{ loading, error, product }, dispatch] = useReducer(reducer, {
-    product: [],
-    loading: true,
-    error: ''
-  });
-  const [isItemInCart, setIsItemInCart] = useState(false);
   const params = useParams();
   const { slug } = params;
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
-      try {
-        const result = await axios.get(
-          `http://localhost:8000/api/products/slug/${slug}`
-        );
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
-      } catch (error) {
-        dispatch({ type: 'FETCH_FAIL', payload: getErrorMessage(error) });
-      }
-    };
-    fetchProducts();
-  }, [slug]);
+  const gqlQuery = new Queries();
+  const { loading, error, data } = useQuery(gqlQuery.GET_PRODUCTS);
+  const { getProducts } = data;
+  const currentProduct = getProducts.find((item) => item.slug === slug);
+  const [product, setProduct] = useState(currentProduct || null);
+  const [isItemInCart, setIsItemInCart] = useState(false);
+  const navigate = useNavigate();
 
   const { state, dispatch: storeDispatch } = useContext(Store);
-  const { cart } = state;
+  const {
+    cart: { cartItems }
+  } = state;
 
   const handleAddToCart = async () => {
     setIsItemInCart(true);
-    const alreadyInCart = cart.cartItems.find(
-      (item) => item._id === product._id
-    );
+    const alreadyInCart = cartItems.find((item) => item.id === product.id);
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
-    const { data } = await axios.get(
-      `http://localhost:8000/api/products/${product._id}`
-    );
 
-    if (data.countInStock < quantity) {
+    if (product.countInStock < product.quantity) {
       window.alert('Sorry. Product is out of stock');
       return;
     }

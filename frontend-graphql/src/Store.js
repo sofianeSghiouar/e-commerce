@@ -21,23 +21,24 @@ function reducer(state, action) {
     case 'CART_ADD_ITEM':
       const newItem = action.payload;
       const alreadyInCart = state.cart.cartItems.find((item) => {
-        return item._id === newItem._id;
+        return item.id === newItem.id;
       });
       const cartItems = alreadyInCart
         ? state.cart.cartItems.map((item) => {
-            return item._id === newItem._id ? newItem : item;
+            return item.id === newItem.id ? newItem : item;
           })
         : [...state.cart.cartItems, newItem];
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     case 'CART_REMOVE_ITEM': {
       const cartItems = state.cart.cartItems.filter(
-        (item) => item._id !== action.payload._id
+        (item) => item.id !== action.payload.id
       );
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-    case 'USER_LOGIN': {
+    case 'USER_LOGIN':
+    case 'USER_REGISTER': {
       return { ...state, userInfo: action.payload };
     }
     case 'USER_LOGOUT': {

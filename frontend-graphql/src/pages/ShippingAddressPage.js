@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,8 @@ function ShippingAddressPage() {
   const navigate = useNavigate();
   const { state, dispatch: storeDispatch } = useContext(Store);
   const {
-    cart: { shippingAddress }
+    cart: { shippingAddress },
+    userInfo
   } = state;
   const [fullName, setFullName] = useState(shippingAddress.fullName || '');
   const [address, setAddress] = useState(shippingAddress.address || '');
@@ -18,6 +19,12 @@ function ShippingAddressPage() {
     shippingAddress.postalCode || ''
   );
   const [country, setCountry] = useState(shippingAddress.country || '');
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/');
+    }
+  }, [navigate, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -95,6 +102,9 @@ function ShippingAddressPage() {
           <div className='mb-3'>
             <Button variant='primary' type='submit'>
               Continue
+            </Button>
+            <Button variant='light' onClick={() => navigate('/cart')}>
+              Return to Cart
             </Button>
           </div>
         </Form>

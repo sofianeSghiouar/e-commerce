@@ -2,10 +2,13 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/esm/Card';
 import Button from 'react-bootstrap/esm/Button';
-import axios from 'axios';
+import { useQuery } from '@apollo/client';
 
 import Rating from './Rating';
 import { Store } from '../Store';
+import Queries from '../utils/graphql/gqlQueries';
+import Loading from './Loading';
+import Message from './Message';
 
 function Product(props) {
   const { product } = props;
@@ -13,68 +16,67 @@ function Product(props) {
   const {
     cart: { cartItems }
   } = state;
+  const gqlQuery = new Queries();
+
+  const { loading, error, data } = useQuery(gqlQuery.GET_PRODUCTS);
 
   async function addToCartHandler(article) {
-    const alreadyInCart = cartItems.find((item) => item._id === article._id);
+    if (data) {
+      const { getProducts } = data;
+      const currentProduct = getProducts.find(
+        (product) => product.id === article.id
+      );
+      const alreadyInCart = cartItems.find((item) => item.id === article.id);
+      const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
 
-    const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
-    const { data } = await axios.get(`http://localhost:8000/`, {
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-        query: {
-          getProductById(${article._id}){
-            name
-            slug
-            image
-            images
-            brand
-            category
-            description
-            price
-            countInStock
-            rating
-            numReviews
-            reviews
-            timestamps
-          }       
-        }
-        `
-      })
-    });
-    if (data.countInStock < article.quantity) {
-      window.alert('Sorry. Product is out of stock');
-      return;
+      if (currentProduct.countInStock < article.quantity) {
+        window.alert('Sorry. Product is out of stock');
+        return;
+      }
+      const payload = { ...article, quantity };
+      storeDispatch({ type: 'CART_ADD_ITEM', payload });
     }
-    const payload = { ...article, quantity };
-    storeDispatch({ type: 'CART_ADD_ITEM', payload });
   }
   return (
-    <Card>
-      {/* <Link to={`/product/${product.slug}`}> */}
-      <Card.Img
-        variant='top'
-        src={product.image}
-        className='card-img-top'
-        alt={product.name}
-      />
-      {/* </Link> */}
-      <Card.Body className='product-info'>
-        {/* <Link to={`/product/${product.slug}`}> */}
-        <Card.Title>{product.name}</Card.Title>
-        {/* </Link> */}
-        <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
+    <div>
+      {loading ? (
+        <div>
+          <Loading />
+        </div>
+      ) : error ? (
+        <div>
+          <Message variant='danger'>{error.message}</Message>
+        </div>
+      ) : (
+        <Card>
+          <Link to={`/product/${product.slug}`}>
+            <Card.Img
+              variant='top'
+              src={product.image}
+              className='card-img-top'
+              alt={product.name}
+            />
+          </Link>
+          <Card.Body className='product-info'>
+            <Link to={`/product/${product.slug}`}>
+              <Card.Title>{product.name}</Card.Title>
+            </Link>
+            <Rating rating={product.rating} numReviews={product.numReviews} />
+            <Card.Text>${product.price}</Card.Text>
 
-        {product.countInStock === 0 ? (
-          <Button variant='light' className='text-danger' disabled>
-            Out of Stock
-          </Button>
-        ) : (
-          <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
-        )}
-      </Card.Body>
-    </Card>
+            {product.countInStock === 0 ? (
+              <Button variant='light' className='text-danger' disabled>
+                Out of Stock
+              </Button>
+            ) : (
+              <Button onClick={() => addToCartHandler(product)}>
+                Add to Cart
+              </Button>
+            )}
+          </Card.Body>
+        </Card>
+      )}
+    </div>
   );
 }
 
