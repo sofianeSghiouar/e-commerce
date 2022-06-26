@@ -1,0 +1,23 @@
+version: "2"
+services: 
+  server: 
+    image: thegooddeal2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: version2
+    environment:
+      - DB_URL=mongodb+srv://thegooddeal:JtiMPgFBGQ6yY0MS@thegooddeal.rmmdg.mongodb.net/thegoodplan?retryWrites=true&w=majority
+    ports: 
+     - "8080:80"
+    depends_on: 
+      - mongo    
+  mongo:
+    image: mongo:4.1 
+    restart: always
+    volumes:
+      - mdb-data2:/data/db
+    ports:
+      - "27027:27027"
+volumes: 
+  mdb-data2: 
