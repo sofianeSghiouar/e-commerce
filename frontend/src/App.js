@@ -11,27 +11,18 @@ import {
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
-
-
-
-
-
-
-
-
-
-
-                                      import { Store } from './Store';
+import { Store } from './Store';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
+
+
+
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import ShippingAddressPage from './pages/ShippingAddressPage';
 import PaymentPage from './pages/PaymentPage';
 
-function App() {
+          function App() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
