@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm'
 import { Helmet } from 'react-helmet-async';
