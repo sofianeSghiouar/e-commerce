@@ -2,18 +2,15 @@ import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 
 import start from './db/connect.js';
-
 import typeDefs from './graphql/typeDefs.js';
 import resolvers from './graphql/resolvers/index.js';
 
 dotenv.config();
-// comment test
 
 const server = new ApolloServer({
   typeDefs,
   resolvers
 });
-const test = 'diddf';
 
 const PORT = process.env.PORT || 8000;
 
