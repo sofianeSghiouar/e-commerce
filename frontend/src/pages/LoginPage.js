@@ -29,9 +29,14 @@ function LoginPage() {
           password
         }
       );
-      storeDispatch({ type: 'USER_LOGIN', payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
+      console.log('data :>> ', data);
+      if (data) {
+        storeDispatch({ type: 'USER_LOGIN', payload: data });
+        localStorage.setItem('userInfo', JSON.stringify(data));
+        navigate(redirect || '/');
+        return;
+      }
+      throw new Error('User not found');
     } catch (error) {
       toast.error(getErrorMessage(error));
     }
@@ -73,7 +78,9 @@ function LoginPage() {
             </Col>
             <Col className='mb-3 text-center '>
               New to The Good Deal?{' '}
-              <Link to={`/login?redirect=${redirect}`}>Create an account</Link>
+              <Link to={`/register?redirect=${redirect}`}>
+                Create an account
+              </Link>
             </Col>
           </Row>
         </Form>

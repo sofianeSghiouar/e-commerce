@@ -1,22 +1,26 @@
-import UserModel from '../../models/user.js';
-import bcrypt from 'bcryptjs';
-import { generateToken } from '../../utils/generateToken.js';
+import UserServices from '../../services/usersServices.js';
 
 export class UsersController {
-  async handleLogin({ body: { password, email } }, res) {
-    const user = await UserModel.findOne({ email: email });
-    if (user) {
-      if (bcrypt.compareSync(password, user.password)) {
-        return {
-          _id: user._id,
-          username: user.username,
-          email: user.email,
-          isAdmin: user.isAdmin,
-          token: generateToken(user)
-        };
-      }
-    }
+  usersServices = new UserServices();
 
-    res.status(401).json({ message: 'Invalid email or password' });
+  async loginService({ body }, res) {
+    const { password, email } = body
+    const userLogin = await this.usersServices.handleLogin(password, email, res);
+    return userLogin
+  }
+
+  async registerService({ body }) {
+    const { name, email, password, confirmPassword } = body;
+    try {
+      const userRegister = await this.usersServices.handleRegister(
+        name,
+        email,
+        password,
+        confirmPassword
+      );
+      return userRegister;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

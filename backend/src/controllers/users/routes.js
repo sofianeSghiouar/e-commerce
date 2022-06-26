@@ -6,8 +6,13 @@ const routes = [
   {
     path: '/users/login',
     method: 'POST',
-    handler: usersController.handleLogin.bind(usersController)
-  }
+    handler: usersController.loginService.bind(usersController)
+  },
+  {
+    path: '/users/register',
+    method: 'POST',
+    handler: usersController.registerService.bind(usersController)
+  },
 ];
 
 export default createRouter(routes);
