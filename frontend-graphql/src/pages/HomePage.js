@@ -24,20 +24,21 @@ const reducer = (state, action) => {
 };
 
 function HomePage() {
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, { // wrap reducer in logger() for steps infos
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
+    // wrap reducer in logger() for steps infos
     products: [],
     loading: true,
-    error: '',
+    error: ''
   });
 
   useEffect(() => {
     const fetchProducts = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('http://localhost:8000/', 
-       { headers: {'Content-type': "application/json"},
-      body: JSON.stringify({
-        query: `
+        const result = await axios.get('http://localhost:8000/', {
+          headers: { 'Content-type': 'application/json' },
+          body: JSON.stringify({
+            query: `
         getProducts {
           name
           slug
@@ -55,10 +56,8 @@ function HomePage() {
         }
         
         `
-      })
-      }
-        
-        );
+          })
+        });
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (error) {
         dispatch({ type: 'FETCH_FAIL', payload: error.message });

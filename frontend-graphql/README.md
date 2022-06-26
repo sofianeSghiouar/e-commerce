@@ -1,7 +1,9 @@
-# The good deals frontend 
+# The good deals frontend
 
 Create frontend using React, Bootstrap ...
+
 # first step
+
 creating list products:
 
 1. create products array

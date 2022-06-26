@@ -26,7 +26,7 @@ function LoginPage() {
         'http://localhost:8000/api/users/login',
         {
           email,
-          password,
+          password
         }
       );
       storeDispatch({ type: 'USER_LOGIN', payload: data });

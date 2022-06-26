@@ -14,10 +14,10 @@ export default {
             username: user.username,
             email: user.email,
             isAdmin: user.isAdmin,
-            token: generateToken(user),
+            token: generateToken(user)
           };
         }
       }
-    },
-  },
+    }
+  }
 };

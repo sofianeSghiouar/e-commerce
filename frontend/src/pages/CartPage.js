@@ -9,7 +9,7 @@ import {
   ListGroupItem,
   Image,
   Button,
-  Card,
+  Card
 } from 'react-bootstrap/esm';
 
 import { Store } from '../Store';
@@ -18,7 +18,7 @@ import Message from '../components/Message';
 function CartPage() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const {
-    cart: { cartItems },
+    cart: { cartItems }
   } = state;
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function CartPage() {
     }
     storeDispatch({
       type: 'CART_ADD_ITEM',
-      payload: { ...item, quantity },
+      payload: { ...item, quantity }
     });
   }
 
@@ -40,7 +40,7 @@ function CartPage() {
     storeDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   }
 
-  function checkoutHandler() {    
+  function checkoutHandler() {
     navigate('/login?redirect=/shipping');
   }
 

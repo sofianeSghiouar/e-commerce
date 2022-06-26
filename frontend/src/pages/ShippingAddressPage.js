@@ -9,7 +9,7 @@ function ShippingAddressPage() {
   const navigate = useNavigate();
   const { state, dispatch: storeDispatch } = useContext(Store);
   const {
-    cart: { shippingAddress },
+    cart: { shippingAddress }
   } = state;
   const [fullName, setFullName] = useState(shippingAddress.fullName || '');
   const [address, setAddress] = useState(shippingAddress.address || '');
@@ -28,8 +28,8 @@ function ShippingAddressPage() {
         address,
         city,
         postalCode,
-        country,
-      },
+        country
+      }
     });
     localStorage.setItem(
       'shippingAddress',
@@ -38,7 +38,7 @@ function ShippingAddressPage() {
         address,
         city,
         postalCode,
-        country,
+        country
       })
     );
     navigate('/payment');

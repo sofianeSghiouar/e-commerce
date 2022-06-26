@@ -6,7 +6,7 @@ import {
   Nav,
   Navbar,
   Badge,
-  NavDropdown,
+  NavDropdown
 } from 'react-bootstrap/esm';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

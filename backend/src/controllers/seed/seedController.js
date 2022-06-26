@@ -8,10 +8,10 @@ export class SeedController {
       await ProductModel.remove({});
       const createdProducts = await ProductModel.insertMany(data.products);
       await UserModel.remove({});
-      const createdUsers = await UserModel.insertMany(data.users);      
-      return {createdProducts, createdUsers}
+      const createdUsers = await UserModel.insertMany(data.users);
+      return { createdProducts, createdUsers };
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
 }

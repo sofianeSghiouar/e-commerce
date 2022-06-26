@@ -11,7 +11,7 @@ function Product(props) {
   const { product } = props;
   const { state, dispatch: storeDispatch } = useContext(Store);
   const {
-    cart: { cartItems },
+    cart: { cartItems }
   } = state;
 
   async function addToCartHandler(article) {
@@ -39,8 +39,8 @@ function Product(props) {
             timestamps
           }       
         }
-        `,
-      }),
+        `
+      })
     });
     if (data.countInStock < article.quantity) {
       window.alert('Sorry. Product is out of stock');
@@ -52,16 +52,16 @@ function Product(props) {
   return (
     <Card>
       {/* <Link to={`/product/${product.slug}`}> */}
-        <Card.Img
-          variant='top'
-          src={product.image}
-          className='card-img-top'
-          alt={product.name}
-        />
+      <Card.Img
+        variant='top'
+        src={product.image}
+        className='card-img-top'
+        alt={product.name}
+      />
       {/* </Link> */}
       <Card.Body className='product-info'>
         {/* <Link to={`/product/${product.slug}`}> */}
-          <Card.Title>{product.name}</Card.Title>
+        <Card.Title>{product.name}</Card.Title>
         {/* </Link> */}
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>

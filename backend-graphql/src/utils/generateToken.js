@@ -6,7 +6,7 @@ export const generateToken = (user) => {
       _id: user._id,
       username: user.username,
       email: user.email,
-      isAdmin: user.isAdmin,
+      isAdmin: user.isAdmin
     },
     process.env.SECRET,
     { expiresIn: '30d' }

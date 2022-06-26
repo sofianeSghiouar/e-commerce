@@ -22,6 +22,6 @@ export default {
       } catch (err) {
         return new Error(err.message);
       }
-    },
-  },
+    }
+  }
 };
