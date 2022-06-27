@@ -19,5 +19,6 @@ export class UsersController {
       confirmPassword
     );
     return userRegister;
+
   }
 }
