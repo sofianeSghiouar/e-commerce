@@ -11,16 +11,13 @@ export class UsersController {
 
   async handleRegister({ body }) {
     const { name, email, password, confirmPassword } = body;
-    try {
-      const userRegister = await this.usersServices.register(
-        name,
-        email,
-        password,
-        confirmPassword
-      );
-      return userRegister;
-    } catch (error) {
-      throw new Error(error);
-    }
+
+    const userRegister = await this.usersServices.register(
+      name,
+      email,
+      password,
+      confirmPassword
+    );
+    return userRegister;
   }
 }
