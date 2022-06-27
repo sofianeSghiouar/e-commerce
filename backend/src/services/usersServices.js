@@ -3,7 +3,7 @@ import UserModel from '../models/user.js';
 import { generateToken } from '../utils/generateToken.js';
 
 export default class UserServices {
-  async handleLogin(password, email, res) {
+  async login(password, email, res) {
     const user = await UserModel.findOne({ email: email });
     if (user) {
       if (bcrypt.compareSync(password, user.password)) {
@@ -13,13 +13,13 @@ export default class UserServices {
           email: user.email,
           isAdmin: user.isAdmin,
           createdAt: user.createdAt,
-          token: generateToken(user)
+          token: await generateToken(user)
         };
       }
     }
     throw new Error({ message: 'User not found' });
   }
-  async handleRegister(name, email, password, confirmPassword) {
+  async register(name, email, password, confirmPassword) {
     if (password !== confirmPassword) {
       throw new Error('Passwords not match');
     }
@@ -36,7 +36,7 @@ export default class UserServices {
     user.password = bcrypt.hashSync(password);
     try {
       const newUser = await user.save();
-      const token = generateToken({
+      const token = await generateToken({
         username: newUser.username,
         email: newUser.email,
         id: newUser._id

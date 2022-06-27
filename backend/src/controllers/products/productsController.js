@@ -1,25 +1,31 @@
-import ProductModel from '../../models/product.js';
-
+import ProductsServices from '../../services/productsServices.js';
 export class ProductsController {
+  productServices = new ProductsServices();
+
   async getProducts() {
-    const products = await ProductModel.find();
-    if (!products) {
-      throw new Error('products not found');
+    try {
+      const products = await this.productServices.getProducts();
+      return products;
+    } catch (error) {
+      throw new Error(error);
     }
-    return products;
   }
+
   async getProductBySlug({ params: { slug } }) {
-    const product = await ProductModel.findOne({ slug: slug });
-    if (!product) {
-      throw new Error('products not found');
+    try {
+      const product = await this.productServices.getProductBySlug(slug);
+      return product;
+    } catch (error) {
+      throw new Error(error);
     }
-    return product;
   }
+
   async getProductById({ params: { id } }) {
-    const product = await ProductModel.findById(id);
-    if (!product) {
-      throw new Error('products not found');
+    try {
+      const product = await this.productServices.getProductById(id);
+      return product;
+    } catch (error) {
+      throw new Error(error);
     }
-    return product;
   }
 }
