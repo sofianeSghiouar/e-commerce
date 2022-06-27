@@ -1,6 +1,5 @@
 import { generateToken } from './generateToken';
 import { jest, describe, it, expect, beforeEach } from '@jest/globals';
-
 jest.mock('./generateToken.js');
 describe('generateToken()', () => {
   beforeEach(() => {
