@@ -11,7 +11,7 @@
     "lint:fix:ts": "eslint . --ext .ts --fix",
     "prettier": "prettier \"/**/*.js\" --write",
     "test": "npm run test:backend",
-    "test:backend": "cd backend && npm run test"
+    "test:backend": "cd backend && yarn install && yarn run test"
   },
   "lint-staged": {
     "/**/*.js": [
