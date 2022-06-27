@@ -5,12 +5,13 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "is-ci || husky install",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"/**/*.js\" --write"
+    "prettier": "prettier \"/**/*.js\" --write",
+    "test": "npm run test:backend",
+    "test:backend": "cd backend && npm run test"
   },
   "lint-staged": {
     "/**/*.js": [
@@ -19,10 +20,10 @@
     "*.js": [
       "eslint . --fix"
     ],
-    "cd frontend/package.json": [
+    "cd frontend": [
       "npm run prettier --write && npm run eslint . --fix"
     ],
-    "cd frontend-graphql/package.json": [
+    "cd frontend-graphql": [
       "npm run prettier --write && npm run eslint . --fix"
     ]
   },
