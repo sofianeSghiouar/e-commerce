@@ -7,15 +7,15 @@
   "scripts": {
     "prepare": "is-ci || husky install",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "eslint . --ext .js --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"/**/*.js\" --write",
+    "prettier": "prettier \"./**/*.js\" --write",
     "test": "npm run test:backend",
     "test:backend": "cd backend && yarn install && yarn run test"
   },
   "lint-staged": {
     "/**/*.js": [
-      "prettier --write ."
+      "prettier --write --ignore-unknown ."
     ],
     "*.js": [
       "eslint . --fix"

@@ -1,17 +1,11 @@
-import UserModel from '../../models/user.js';
-import ProductModel from '../../models/product.js';
-import data from '../../data.js';
-
-export class SeedController {
-  async resetDatabase() {
+import SeedService from '../../services/seedService.js';
+export default class SeedController {
+  seedService = new SeedService();
+  async resetDB() {
     try {
-      await ProductModel.remove({});
-      const createdProducts = await ProductModel.insertMany(data.products);
-      await UserModel.remove({});
-      const createdUsers = await UserModel.insertMany(data.users);
-      return { createdProducts, createdUsers };
+      await this.seedService.resetDatabase();
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error);
     }
   }
 }
