@@ -4,11 +4,11 @@ const productsServices = new ProductsServices();
 export default {
   Query: {
     getProducts: async () => {
-      const result = await productsServices.findAll();
-      return result;
+      const products = await productsServices.findAll();
+      return products;
     },
     getProductBySlug: async (_, args) => {
-      const product = await productsServices(args.slug);
+      const product = await productsServices.findBySlug(args.slug);
       return product;
     },
     getProductById: async (_, args) => {
