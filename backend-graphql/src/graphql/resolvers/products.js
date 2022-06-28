@@ -1,4 +1,4 @@
-import ProductsServices from '../../services/productsServices.js';
+  import ProductsServices from '../../services/productsServices.js';
 
 const productsServices = new ProductsServices();
 export default {
