@@ -1,4 +1,4 @@
-    import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -44,6 +44,7 @@ function LoginPage() {
             data: { userLogin }
           }
         } = result;
+        console.log('LoginPage userLogin', userLogin);
         if (userLogin) {
           storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
           localStorage.setItem('userInfo', JSON.stringify(userLogin));

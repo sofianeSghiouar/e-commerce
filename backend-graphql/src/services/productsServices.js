@@ -4,6 +4,7 @@ export default class ProductsServices {
   findAll = async () => {
     try {
       const products = await ProductModel.find();
+      console.log('productsServices products', products);
       return products;
     } catch (error) {
       throw new Error(error);
