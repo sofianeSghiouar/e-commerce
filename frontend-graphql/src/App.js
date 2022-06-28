@@ -23,6 +23,7 @@ import RegisterPage from './pages/RegisterPage';
 function App() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
+  console.log('userInfo', userInfo);
 
   const logoutHandler = () => {
     storeDispatch({ type: 'USER_LOGOUT' });
