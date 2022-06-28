@@ -8,21 +8,20 @@
   "scripts": {
     "clean": "rimraf lib",
     "compile": "npm run clean && babel src -d lib && npm run prettier --write && npm run lint:fix",
+    "build": "docker compose build",
     "start:prod": "nodemon ./lib/server.js",
     "start:dev": "nodemon ./src/server.js",
     "start:db": "docker compose up -d mongo",
-    "build": "docker compose build",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "lint:fix:ts": "eslint . --ext .ts --fix",
-    "prettier": "prettier \"{src}/**/*.{js}\" --write",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier \"./**/*.js\" --write",
     "test": "jest"
   },
   "lint-staged": {
-    "{src}/*.{js,css}": [
+    "src/*.{js,css}": [
       "prettier --write"
     ],
-    "*.{js}": [
+    "*.js": [
       "eslint . --ext .js --fix"
     ]
   },
