@@ -13,6 +13,7 @@ const server = new ApolloServer({
 });
 
 const PORT = process.env.PORT || 8000;
+console.log('PORT', PORT);
 
 start().then(async () => {
   return await server.listen({ port: PORT }).then(({ url }) => {

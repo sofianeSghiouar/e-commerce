@@ -23,7 +23,7 @@ app.use((err, req, res) => {
 });
 
 const PORT = process.env.PORT || 8000;
-
+console.log('PORT', PORT);
 startDB().then(() =>
   app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`))
 );
