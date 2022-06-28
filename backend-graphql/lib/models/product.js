@@ -1,66 +1,72 @@
 import mongoose from 'mongoose';
-const reviewSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
+const reviewSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    comment: {
+      type: String,
+      required: true
+    },
+    rating: {
+      type: Number,
+      required: true
+    }
   },
-  comment: {
-    type: String,
-    required: true
-  },
-  rating: {
-    type: Number,
-    required: true
+  {
+    timestamps: true
   }
-}, {
-  timestamps: true
-});
-const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true
+);
+const productSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    image: {
+      type: String,
+      required: true
+    },
+    images: [String],
+    brand: {
+      type: String,
+      required: true
+    },
+    category: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    countInStock: {
+      type: Number,
+      required: true
+    },
+    rating: {
+      type: Number,
+      required: true
+    },
+    numReviews: {
+      type: Number,
+      required: true
+    },
+    reviews: [reviewSchema]
   },
-  slug: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  image: {
-    type: String,
-    required: true
-  },
-  images: [String],
-  brand: {
-    type: String,
-    required: true
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  countInStock: {
-    type: Number,
-    required: true
-  },
-  rating: {
-    type: Number,
-    required: true
-  },
-  numReviews: {
-    type: Number,
-    required: true
-  },
-  reviews: [reviewSchema]
-}, {
-  timestamps: true
-});
+  {
+    timestamps: true
+  }
+);
 export default mongoose.model('products', productSchema);

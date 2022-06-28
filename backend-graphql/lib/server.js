@@ -11,11 +11,11 @@ const server = new ApolloServer({
 });
 const PORT = process.env.PORT || 8000;
 start().then(async () => {
-  return await server.listen({
-    port: PORT
-  }).then(({
-    url
-  }) => {
-    console.log(`server started at : ${url}`);
-  });
+  return await server
+    .listen({
+      port: PORT
+    })
+    .then(({ url }) => {
+      console.log(`server started at : ${url}`);
+    });
 });

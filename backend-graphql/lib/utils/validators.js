@@ -1,4 +1,9 @@
-export const validateRegisterInput = (username, email, password, confirmPassword) => {
+export const validateRegisterInput = (
+  username,
+  email,
+  password,
+  confirmPassword
+) => {
   const errors = {};
 
   if (username.trim() === '') {
