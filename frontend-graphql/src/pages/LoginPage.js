@@ -44,7 +44,6 @@ function LoginPage() {
             data: { userLogin }
           }
         } = result;
-        console.log('LoginPage userLogin', userLogin);
         if (userLogin) {
           storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
           localStorage.setItem('userInfo', JSON.stringify(userLogin));
