@@ -17,7 +17,7 @@ export default class UserServices {
         };
       }
     }
-    throw new Error({ message: 'User not found' });
+    throw new Error('User not found');
   }
   async register(name, email, password, confirmPassword) {
     if (password !== confirmPassword) {

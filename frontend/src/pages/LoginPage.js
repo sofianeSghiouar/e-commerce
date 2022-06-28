@@ -36,7 +36,7 @@ function LoginPage() {
         navigate(redirect || '/');
         return;
       }
-      throw new Error('User not found');
+      throw new Error('Server not respond, try to connect later');
     } catch (error) {
       toast.error(getErrorMessage(error));
     }

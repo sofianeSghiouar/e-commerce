@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import getErrorMessage from './errorsHandler';
+import getErrorMessage from './errorsHandler.js';
 
 export default async function queryFetch({
   query,
@@ -14,13 +14,8 @@ export default async function queryFetch({
       headers: { 'content-type': 'application/json' },
       data: { query, variables }
     });
-    console.log('result queryH:>> ', result);
-    if (result.data.hasOwnProperty('errors')) {
-      throw new Error(result.data.errors.message);
-    }
     return result;
   } catch (error) {
-    console.log('error queryH :>> ', { ...error });
-    toast.error(getErrorMessage(error));
+    throw new Error(error);
   }
 }

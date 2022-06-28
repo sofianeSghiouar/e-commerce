@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import start from './db/connect.js';
+import startDB from './db/connect.js';
 
 import productsRouter from './controllers/products/routes.js';
 import usersRouter from './controllers/users/routes.js';
@@ -23,7 +23,7 @@ app.use((err, req, res) => {
 });
 
 const PORT = process.env.PORT || 8000;
-
-start().then(() =>
+console.log('PORT', PORT);
+startDB().then(() =>
   app.listen(PORT, () => console.log(`Server started at PORT:${PORT}`))
 );

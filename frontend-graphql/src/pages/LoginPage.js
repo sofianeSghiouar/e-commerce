@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap/esm';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Store } from '../Store.js';
+import getErrorMessage from '../utils/errorsHandler.js';
 import queryFetch from '../utils/queryHandler.js';
 
 function LoginPage() {
@@ -36,23 +38,22 @@ function LoginPage() {
     };
 
     queryFetch(queryOptions)
-      .then(
-        ({
+      .then((result) => {
+        const {
           data: {
             data: { userLogin }
           }
-        }) => {
-          if (userLogin) {
-            console.log('result userLogin:>> ', userLogin);
-            storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
-            localStorage.setItem('userInfo', JSON.stringify(userLogin));
-            navigate(redirect || '/');
-          }
+        } = result;
+        if (userLogin) {
+          storeDispatch({ type: 'USER_LOGIN', payload: userLogin });
+          localStorage.setItem('userInfo', JSON.stringify(userLogin));
+          navigate(redirect || '/');
+          return;
         }
-      )
+        toast.error(getErrorMessage(result));
+      })
       .catch((error) => {
-        console.log('error.message :>> ', error);
-        return error.message;
+        throw new Error(error);
       });
   };
 

@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Store } from '../Store';
+import getErrorMessage from '../utils/errorsHandler';
 import queryFetch from '../utils/queryHandler';
 
 function RegisterPage() {
@@ -59,27 +60,25 @@ function RegisterPage() {
     };
 
     queryFetch(queryOptions)
-      .then(
-        ({
+      .then((result) => {
+        const {
           data: {
             data: { userRegister }
           }
-        }) => {
-          console.log('userRegister RegisterPage:>> ', userRegister);
-          if (userRegister) {
-            console.log('result :>> ', userRegister);
-
-            storeDispatch({ type: 'USER_REGISTER', payload: userRegister });
-            localStorage.setItem('userInfo', JSON.stringify(userRegister));
-            cartItems.length > 0
-              ? navigate('/shipping')
-              : navigate(redirect || '/');
-            return;
-          }
-          console.log('result data userRegister when false:>> ', userRegister);
+        } = result;
+        if (userRegister) {
+          storeDispatch({ type: 'USER_REGISTER', payload: userRegister });
+          localStorage.setItem('userInfo', JSON.stringify(userRegister));
+          cartItems.length > 0
+            ? navigate('/shipping')
+            : navigate(redirect || '/');
+          return;
         }
-      )
-      .catch((error) => error.message);
+        toast.error(getErrorMessage(result));
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
 
   return (

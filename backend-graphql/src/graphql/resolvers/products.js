@@ -1,27 +1,19 @@
-import ProductModel from '../../models/product.js';
+import ProductsServices from '../../services/productsServices.js';
 
+const productsServices = new ProductsServices();
 export default {
   Query: {
     getProducts: async () => {
-      try {
-        return await ProductModel.find();
-      } catch (err) {
-        return err;
-      }
+      const result = await productsServices.findAll();
+      return result;
     },
     getProductBySlug: async (_, args) => {
-      try {
-        return await ProductModel.findOne({ slug: args.slug });
-      } catch (err) {
-        return err;
-      }
+      const product = await productsServices(args.slug);
+      return product;
     },
     getProductById: async (_, args) => {
-      try {
-        return await ProductModel.findById(args.id);
-      } catch (err) {
-        return err;
-      }
+      const product = await productsServices.findById(args.id);
+      return product;
     }
   }
 };

@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 
-const startDB = async () => {
+const start = async () => {
   try {
     await mongoose
-      .connect(process.env.DB_URL, { useNewUrlParser: true })
+      .connect(process.env.DB_URL, {
+        useNewUrlParser: true
+      })
       .then(() => {
         console.log('database connected');
       });
@@ -12,4 +14,4 @@ const startDB = async () => {
   }
 };
 
-export default startDB;
+export default start;
