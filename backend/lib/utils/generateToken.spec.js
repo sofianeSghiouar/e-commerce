@@ -1,11 +1,7 @@
 import { generateToken } from './generateToken';
 import jwt from 'jsonwebtoken';
 import { jest, describe, it, expect } from '@jest/globals';
-jest.mock('jsonwebtoken'); // jest.mock('jsonwebtoken', () => ({
-//   ...jest.requireActual('jsonwebtoken'), // import and retain the original functionalities
-//   sign: jest.fn().mockReturnValue('fakeToken') // overwrite sign
-// }));
-
+jest.mock('jsonwebtoken');
 describe('generateToken()', () => {
   it('should call generaToken function', async () => {
     const user = {
@@ -14,6 +10,7 @@ describe('generateToken()', () => {
       email: 'email',
       isAdmin: false
     };
+    console.log('jwt :>> ', jwt.sign);
     jwt.sign.mockResolvedValue('accessToken');
     const result = await generateToken(user);
     console.log('token :>> ', result);
@@ -28,7 +25,7 @@ describe('generateToken()', () => {
       isAdmin: false
     };
     jwt.sign.mockResolvedValue(() => {
-      throw new Error();
+      throw new Error('error message');
     });
     const result = await generateToken(user);
     console.log('result 2:>> ', result);

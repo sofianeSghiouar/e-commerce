@@ -147,13 +147,10 @@ export default {
   //   "**/?(*.)+(spec|test).[tj]s?(x)"
   // ],
 
-
-  testPathIgnorePatterns: ['\\\\node_modules\\\\'],
+  testPathIgnorePatterns: ['\\\\node_modules\\\\', './lib'],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   testRegex: '((\\.|/*.)(spec))\\.js?$',
-
- 
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,

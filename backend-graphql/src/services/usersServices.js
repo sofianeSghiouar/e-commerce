@@ -25,7 +25,7 @@ export default class UsersServices {
       errors.general = 'Wrong credentials';
       throw new UserInputError('Wrong credentials', { errors });
     }
-    const token = generateToken(user);
+    const token = await generateToken(user);
     return {
       id: user._id,
       ...user._doc,
@@ -55,7 +55,7 @@ export default class UsersServices {
         createdAt: new Date().toISOString()
       });
       const result = await newUser.save();
-      const token = generateToken(result);
+      const token = await generateToken(result);
       return {
         ...result._doc,
         id: result._id,
