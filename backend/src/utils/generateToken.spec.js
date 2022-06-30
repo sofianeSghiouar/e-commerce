@@ -5,7 +5,7 @@ import { jest, describe, it, expect } from '@jest/globals';
 jest.mock('jsonwebtoken');
 
 describe('generateToken()', () => {
-  it('should call generaToken function', async () => {
+  it('should call generaToken() and return a token', async () => {
     const user = {
       _id: 'some id',
       username: 'username',
