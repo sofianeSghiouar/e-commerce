@@ -5,12 +5,12 @@ const routes = [
   {
     path: '/users/login',
     method: 'POST',
-    handler: usersController.loginService.bind(usersController)
+    handler: usersController.handleLogin.bind(usersController)
   },
   {
     path: '/users/register',
     method: 'POST',
-    handler: usersController.registerService.bind(usersController)
+    handler: usersController.handleRegister.bind(usersController)
   }
 ];
 export default createRouter(routes);

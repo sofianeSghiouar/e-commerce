@@ -15,22 +15,26 @@ export default class UsersServices {
     if (!valid) {
       throw new UserInputError('Error', { errors });
     }
-    const user = await UserModel.findOne({ email: email });
-    if (!user) {
-      errors.general = 'User not found';
-      throw new UserInputError('User not found', { errors });
+    try {
+      const user = await UserModel.findOne({ email: email });
+      if (!user) {
+        errors.general = 'User not found';
+        throw new UserInputError('User not found');
+      }
+      const match = bcrypt.compareSync(password, user.password);
+      if (!match) {
+        errors.general = 'Wrong credentials';
+        throw new UserInputError('Wrong credentials', { errors });
+      }
+      const token = await generateToken(user);
+      return {
+        id: user._id,
+        ...user._doc,
+        token
+      };
+    } catch (error) {
+      throw new Error(error);
     }
-    const match = bcrypt.compareSync(password, user.password);
-    if (!match) {
-      errors.general = 'Wrong credentials';
-      throw new UserInputError('Wrong credentials', { errors });
-    }
-    const token = generateToken(user);
-    return {
-      id: user._id,
-      ...user._doc,
-      token
-    };
   };
 
   register = async (username, email, password, confirmPassword) => {
@@ -55,7 +59,7 @@ export default class UsersServices {
         createdAt: new Date().toISOString()
       });
       const result = await newUser.save();
-      const token = generateToken(result);
+      const token = await generateToken(result);
       return {
         ...result._doc,
         id: result._id,
