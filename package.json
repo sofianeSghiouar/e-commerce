@@ -10,8 +10,9 @@
     "lint:fix": "eslint . --ext .js --fix",
     "lint:fix:ts": "eslint . --ext .ts --fix",
     "prettier": "prettier \"./**/*.js\" --write",
-    "test": "npm run test:backend",
-    "test:backend": "cd backend && yarn install && yarn run test"
+    "test": "npm run test:backend && npm run test:backend-graphql",
+    "test:backend": "cd backend && yarn install && yarn run test",
+    "test:backend-graphql": "cd backend-graphql && yarn install && yarn run test"
   },
   "lint-staged": {
     "/**/*.js": [

@@ -6,6 +6,7 @@ import startDB from './db/connect.js';
 import productsRouter from './controllers/products/routes.js';
 import usersRouter from './controllers/users/routes.js';
 import seedRouter from './controllers/seed/route.js';
+import ordersRouter from './controllers/orders/routes.js';
 
 dotenv.config();
 
@@ -17,8 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', productsRouter);
 app.use('/api', usersRouter);
 app.use('/api', seedRouter);
+app.use('/api', ordersRouter);
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
