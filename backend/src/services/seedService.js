@@ -1,6 +1,6 @@
 import ProductModel from '../models/product.js';
 import UserModel from '../models/user.js';
-import data from '../data.js';
+import data from '../utils/data.js';
 
 export default class SeedService {
   async resetDatabase() {

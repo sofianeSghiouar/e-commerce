@@ -25,7 +25,6 @@ describe('usersServices', () => {
       try {
         await usersServices.login(credentials.email, credentials.password);
       } catch (error) {
-        console.log('error :>> ', error.extensions.errors);
         expect(error.message).toBe('Error');
         expect(error.extensions.errors.email).toBe(
           'Email must be a valid email adress'
