@@ -26,8 +26,7 @@
     ],
     "cd frontend-graphql": [
       "npm run prettier --write && npm run eslint . --fix"
-    ]
-    ,
+    ],
     "cd frontend-tsed": [
       "npm run prettier --write && npm run eslint . --fix"
     ]

@@ -37,6 +37,7 @@ function HomePage() {
       try {
         const result = await axios.get('http://localhost:8083/rest/products');
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        console.log('result :>> ', result);
       } catch (error) {
         dispatch({ type: 'FETCH_FAIL', payload: error.message });
       }
@@ -50,7 +51,7 @@ function HomePage() {
         <title>The Good Deals</title>
       </Helmet>
       <h1>Featured Products</h1>
-      <div className='products'>
+      <div className='products mt-5'>
         {loading ? (
           <div>
             <Loading />

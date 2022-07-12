@@ -156,7 +156,7 @@ function ProductPage() {
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <div className='d-grid'>
-                        <Button onClick={handleAddToCart} variant='primary'>
+                        <Button onClick={handleAddToCart} variant='dark'>
                           Add To Card
                         </Button>
                       </div>
@@ -168,7 +168,7 @@ function ProductPage() {
                         <Button
                           onClick={handleGoToCart}
                           bg='light'
-                          variant='success'
+                          variant='warning'
                         >
                           Go To Card
                         </Button>

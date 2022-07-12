@@ -6,7 +6,12 @@ import {
   Nav,
   Navbar,
   Badge,
-  NavDropdown
+  NavDropdown,
+  InputGroup,
+  Form,
+  Button,
+  Row,
+  Col
 } from 'react-bootstrap/esm';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,6 +48,15 @@ function App() {
               <LinkContainer to='/'>
                 <Navbar.Brand>The Good Deals</Navbar.Brand>
               </LinkContainer>
+              <Form className='w-50 me-5'>
+                <InputGroup>
+                  <Form.Control type='search' placeholder='search...' />
+
+                  <Button className='d-inline' variant='warning'>
+                    <i className='fa fa-search' aria-hidden='true'></i>
+                  </Button>
+                </InputGroup>
+              </Form>
               <Nav>
                 <Link to='/cart' className='nav-link'>
                   <i
@@ -107,7 +121,9 @@ function App() {
           </Container>
         </main>
         <footer>
-          <div className='text-center'>All rights reserved</div>
+          <div className='text-center'>
+            2022 © TheGoodDeal - All Rights Reserved. Privacy Policy
+          </div>
         </footer>
       </div>
     </BrowserRouter>
