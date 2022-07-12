@@ -38,9 +38,9 @@ function Product(props) {
           alt={product.name}
         />
       </Link>
-      <Card.Body className='product-info'>
+      <Card.Body>
         <Link to={`/product/${product.slug}`}>
-          <Card.Title>{product.name}</Card.Title>
+          <Card.Title className='product-info'>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>${product.price}</Card.Text>
@@ -50,7 +50,9 @@ function Product(props) {
             Out of Stock
           </Button>
         ) : (
-          <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
+          <Button variant='dark' onClick={() => addToCartHandler(product)}>
+            Add to Cart
+          </Button>
         )}
       </Card.Body>
     </Card>

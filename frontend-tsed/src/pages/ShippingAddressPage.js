@@ -93,7 +93,7 @@ function ShippingAddressPage() {
             />
           </Form.Group>
           <div className='mb-3'>
-            <Button variant='primary' type='submit'>
+            <Button variant='dark' type='submit'>
               Continue
             </Button>
           </div>

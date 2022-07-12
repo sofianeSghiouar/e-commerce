@@ -50,7 +50,7 @@ function CartPage() {
         <title>Shopping Cart</title>
       </Helmet>
       <h1>Shopping Cart</h1>
-      <Row>
+      <Row className='mt-5'>
         {cartItems.length === 0 ? (
           <Message>
             Cart is empty. <Link to={'/'}>Go Shopping</Link>{' '}
@@ -69,7 +69,12 @@ function CartPage() {
                         thumbnail
                         fluid
                       />{' '}
-                      <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                      <Link
+                        className='product-info-cart'
+                        to={`/product/${item.slug}`}
+                      >
+                        {item.name}
+                      </Link>
                     </Col>
                     <Col md={3}>
                       <Button
@@ -97,7 +102,7 @@ function CartPage() {
                     <Col md={2}>
                       <Button
                         onClick={() => removeItemHandler(item)}
-                        variant='light'
+                        variant='outline-danger'
                       >
                         <i className='typcn typcn-trash' />
                       </Button>
@@ -130,9 +135,7 @@ function CartPage() {
                   <ListGroup.Item>
                     <div className='d-grid'>
                       <Button
-                        variant={`${
-                          cartItems.length === 0 ? 'dark' : 'primary'
-                        }`}
+                        variant={`${cartItems.length === 0 ? 'light' : 'dark'}`}
                         disabled={cartItems.length === 0}
                         onClick={checkoutHandler}
                       >

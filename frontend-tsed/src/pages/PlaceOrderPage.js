@@ -64,7 +64,7 @@ function PlaceOrderPage() {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(
-        'http://localhost:8000/api/order',
+        'http://localhost:8083/rest/order',
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
@@ -81,13 +81,14 @@ function PlaceOrderPage() {
           }
         }
       );
-      storeDispatch({ type: 'CART_CLEAR' });
-      dispatch({ type: 'CREATE_SUCCESS' });
-      localStorage.removeItem('cartItems');
+      // storeDispatch({ type: 'CART_CLEAR' });
+      // dispatch({ type: 'CREATE_SUCCESS' });
+      // localStorage.removeItem('cartItems');
       console.log('data :>> ', data);
-      navigate(`/order/${data.order._id}`);
+      // navigate(`/order/${data.order._id}`);
     } catch (error) {
       dispatch({ type: 'CREATE_FAIL' });
+      console.log('error :>> ', error);
       toast.error(getErrorMessage(error));
     }
   };
@@ -127,7 +128,7 @@ function PlaceOrderPage() {
               <Card.Title>Items</Card.Title>
               <ListGroup variant='flush'>
                 {cart.cartItems.map((item) => (
-                  <ListGroupItem key={item._id}>
+                  <ListGroupItem key={item.id}>
                     <Row className='align-items-center'>
                       <Col md={6} sm={5}>
                         <Image
