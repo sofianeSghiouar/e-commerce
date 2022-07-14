@@ -1,19 +1,19 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
-import ListGroup from 'react-bootstrap/esm/ListGroup';
-import Card from 'react-bootstrap/esm/Card';
-import Badge from 'react-bootstrap/esm/Badge';
-import Button from 'react-bootstrap/esm/Button';
-import Image from 'react-bootstrap/esm/Image';
-import Rating from '../components/Rating';
-import Loading from '../components/Loading';
-import Message from '../components/Message';
-import { Store } from '../Store';
-import { useQuery } from '@apollo/client';
-import Queries from '../utils/graphql/gqlQueries';
+import React, { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Row";
+import ListGroup from "react-bootstrap/esm/ListGroup";
+import Card from "react-bootstrap/esm/Card";
+import Badge from "react-bootstrap/esm/Badge";
+import Button from "react-bootstrap/esm/Button";
+import Image from "react-bootstrap/esm/Image";
+import Rating from "../components/Rating";
+import Loading from "../components/Loading";
+import Message from "../components/Message";
+import { Store } from "../Store";
+import { useQuery } from "@apollo/client";
+import Queries from "../utils/graphql/gqlQueries";
 
 function ProductPage() {
   const params = useParams();
@@ -37,18 +37,18 @@ function ProductPage() {
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
 
     if (product.countInStock < product.quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
     const payload = { ...product, quantity };
     storeDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload
     });
   };
 
   const handleGoToCart = () => {
-    navigate('/cart');
+    navigate("/cart");
   };
 
   return (
@@ -56,16 +56,16 @@ function ProductPage() {
       {loading ? (
         <Loading />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant="danger">{error}</Message>
       ) : (
-        <Row className='d-flex justify-content-around w-100'>
-          <Col lg={6} className='d-flex flex-wrap'>
+        <Row className="d-flex justify-content-around w-100">
+          <Col lg={6} className="d-flex flex-wrap">
             {product.images.map((img) => (
               <Image
                 fluid
                 key={img}
                 className={`${
-                  product.images.length > 2 ? 'w-50' : 'w-100'
+                  product.images.length > 2 ? "w-50" : "w-100"
                 } p-3`}
                 src={img}
                 alt={product.name}
@@ -73,7 +73,7 @@ function ProductPage() {
             ))}
           </Col>
           <Col md={4} lg={3}>
-            <ListGroup variant='flush'>
+            <ListGroup variant="flush">
               <ListGroup.Item>
                 <Helmet>
                   <title>{product.name}</title>
@@ -107,17 +107,17 @@ function ProductPage() {
                       <Col>Status:</Col>
                       <Col>
                         {product.countInStock > 0 ? (
-                          <Badge bg='success'>In Stock</Badge>
+                          <Badge bg="success">In Stock</Badge>
                         ) : (
-                          <Badge bg='danger'>Out Of Stock</Badge>
+                          <Badge bg="danger">Out Of Stock</Badge>
                         )}
                       </Col>
                     </Row>
                   </ListGroup.Item>
                   {product.countInStock === 0 && (
                     <ListGroup.Item>
-                      <div className='d-grid'>
-                        <Button variant='danger' disabled>
+                      <div className="d-grid">
+                        <Button variant="danger" disabled>
                           Add To Card
                         </Button>
                       </div>
@@ -125,8 +125,8 @@ function ProductPage() {
                   )}
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
-                      <div className='d-grid'>
-                        <Button onClick={handleAddToCart} variant='primary'>
+                      <div className="d-grid">
+                        <Button onClick={handleAddToCart} variant="primary">
                           Add To Card
                         </Button>
                       </div>
@@ -134,11 +134,11 @@ function ProductPage() {
                   )}
                   {isItemInCart && (
                     <ListGroup.Item>
-                      <div className='d-grid'>
+                      <div className="d-grid">
                         <Button
                           onClick={handleGoToCart}
-                          bg='light'
-                          variant='success'
+                          bg="light"
+                          variant="success"
                         >
                           Go To Card
                         </Button>

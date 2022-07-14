@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import axios from 'axios';
+import React, { useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import axios from "axios";
 import {
   Row,
   Col,
@@ -10,10 +10,10 @@ import {
   Image,
   Button,
   Card
-} from 'react-bootstrap/esm';
+} from "react-bootstrap/esm";
 
-import { Store } from '../Store';
-import Message from '../components/Message';
+import { Store } from "../Store";
+import Message from "../components/Message";
 
 function CartPage() {
   const { state, dispatch: storeDispatch } = useContext(Store);
@@ -27,21 +27,21 @@ function CartPage() {
       `http://localhost:8000/api/products/${item._id}`
     );
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
     storeDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...item, quantity }
     });
   }
 
   function removeItemHandler(item) {
-    storeDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    storeDispatch({ type: "CART_REMOVE_ITEM", payload: item });
   }
 
   function checkoutHandler() {
-    navigate('/login?redirect=/shipping');
+    navigate("/login?redirect=/shipping");
   }
 
   return (
@@ -53,14 +53,14 @@ function CartPage() {
       <Row>
         {cartItems.length === 0 ? (
           <Message>
-            Cart is empty. <Link to={'/'}>Go Shopping</Link>{' '}
+            Cart is empty. <Link to={"/"}>Go Shopping</Link>{" "}
           </Message>
         ) : (
           <Col md={8}>
             <ListGroup>
               {cartItems.map((item) => (
                 <ListGroupItem key={item._id}>
-                  <Row className='align-items-center'>
+                  <Row className="align-items-center">
                     <Col md={4}>
                       <Image
                         src={item.image}
@@ -68,7 +68,7 @@ function CartPage() {
                         rounded
                         thumbnail
                         fluid
-                      />{' '}
+                      />{" "}
                       <Link to={`/product/${item.slug}`}>{item.name}</Link>
                     </Col>
                     <Col md={3}>
@@ -76,19 +76,19 @@ function CartPage() {
                         onClick={() =>
                           updateCartHandler(item, item.quantity - 1)
                         }
-                        variant='light'
+                        variant="light"
                         disabled={item.quantity === 1}
                       >
-                        <i className='typcn typcn-minus' />
-                      </Button>{' '}
-                      <span>{item.quantity}</span>{' '}
+                        <i className="typcn typcn-minus" />
+                      </Button>{" "}
+                      <span>{item.quantity}</span>{" "}
                       <Button
                         onClick={() =>
                           updateCartHandler(item, item.quantity + 1)
                         }
-                        variant='light'
+                        variant="light"
                       >
-                        <i className='typcn typcn-plus' />
+                        <i className="typcn typcn-plus" />
                       </Button>
                     </Col>
                     <Col md={3}>
@@ -97,9 +97,9 @@ function CartPage() {
                     <Col md={2}>
                       <Button
                         onClick={() => removeItemHandler(item)}
-                        variant='light'
+                        variant="light"
                       >
-                        <i className='typcn typcn-trash' />
+                        <i className="typcn typcn-trash" />
                       </Button>
                     </Col>
                   </Row>
@@ -115,7 +115,7 @@ function CartPage() {
                 <ListGroup>
                   <ListGroupItem>
                     <h3>
-                      Number of acticles:{' '}
+                      Number of acticles:{" "}
                       {cartItems.reduce((a, c) => {
                         return a + c.quantity;
                       }, 0)}
@@ -124,14 +124,14 @@ function CartPage() {
                       Total: $
                       {cartItems.reduce((a, c) => {
                         return a + c.price * c.quantity;
-                      }, 0)}{' '}
+                      }, 0)}{" "}
                     </h3>
                   </ListGroupItem>
                   <ListGroup.Item>
-                    <div className='d-grid'>
+                    <div className="d-grid">
                       <Button
                         variant={`${
-                          cartItems.length === 0 ? 'dark' : 'primary'
+                          cartItems.length === 0 ? "dark" : "primary"
                         }`}
                         disabled={cartItems.length === 0}
                         onClick={checkoutHandler}

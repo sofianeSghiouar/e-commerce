@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import React, { useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   Row,
   Col,
@@ -9,13 +9,13 @@ import {
   Image,
   Button,
   Card
-} from 'react-bootstrap/esm';
-import { useQuery } from '@apollo/client';
+} from "react-bootstrap/esm";
+import { useQuery } from "@apollo/client";
 
-import { Store } from '../Store';
-import Message from '../components/Message';
-import Queries from '../utils/graphql/gqlQueries';
-import Loading from '../components/Loading';
+import { Store } from "../Store";
+import Message from "../components/Message";
+import Queries from "../utils/graphql/gqlQueries";
+import Loading from "../components/Loading";
 
 function CartPage() {
   const gqlQuery = new Queries();
@@ -31,21 +31,21 @@ function CartPage() {
       const { getProducts } = data;
       const currentItem = getProducts.find((product) => product.id === item.id);
       if (currentItem.countInStock < quantity) {
-        window.alert('Sorry. Product is out of stock');
+        window.alert("Sorry. Product is out of stock");
         return;
       }
     }
     storeDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...item, quantity }
     });
   }
   function removeItemHandler(item) {
-    storeDispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    storeDispatch({ type: "CART_REMOVE_ITEM", payload: item });
   }
 
   function checkoutHandler() {
-    navigate('/login?redirect=/shipping');
+    navigate("/login?redirect=/shipping");
   }
 
   return (
@@ -56,7 +56,7 @@ function CartPage() {
         </div>
       ) : error ? (
         <div>
-          <Message variant='danger'>{error.message}</Message>
+          <Message variant="danger">{error.message}</Message>
         </div>
       ) : (
         <div>
@@ -67,14 +67,14 @@ function CartPage() {
           <Row>
             {cartItems.length === 0 ? (
               <Message>
-                Cart is empty. <Link to={'/'}>Go Shopping</Link>{' '}
+                Cart is empty. <Link to={"/"}>Go Shopping</Link>{" "}
               </Message>
             ) : (
               <Col md={8}>
                 <ListGroup>
                   {cartItems.map((item) => (
                     <ListGroupItem key={item.id}>
-                      <Row sm={4} className='align-items-center'>
+                      <Row sm={4} className="align-items-center">
                         <Col lg={5} md={3} sm={2}>
                           <Image
                             src={item.image}
@@ -82,7 +82,7 @@ function CartPage() {
                             rounded
                             thumbnail
                             fluid
-                          />{' '}
+                          />{" "}
                           <Link to={`/product/${item.slug}`}>{item.name}</Link>
                         </Col>
                         <Col md={2} sm={2}>
@@ -93,27 +93,27 @@ function CartPage() {
                             onClick={() =>
                               updateCartHandler(item, item.quantity - 1)
                             }
-                            variant='light'
+                            variant="light"
                             disabled={item.quantity === 1}
                           >
-                            <i className='typcn typcn-minus' />
-                          </Button>{' '}
-                          <span>{item.quantity}</span>{' '}
+                            <i className="typcn typcn-minus" />
+                          </Button>{" "}
+                          <span>{item.quantity}</span>{" "}
                           <Button
                             onClick={() =>
                               updateCartHandler(item, item.quantity + 1)
                             }
-                            variant='light'
+                            variant="light"
                           >
-                            <i className='typcn typcn-plus' />
+                            <i className="typcn typcn-plus" />
                           </Button>
                         </Col>
                         <Col md={2}>
                           <Button
                             onClick={() => removeItemHandler(item)}
-                            variant='light'
+                            variant="light"
                           >
-                            <i className='typcn typcn-trash' />
+                            <i className="typcn typcn-trash" />
                           </Button>
                         </Col>
                       </Row>
@@ -128,7 +128,7 @@ function CartPage() {
                   <ListGroup>
                     <ListGroupItem>
                       <h3>
-                        Number of acticles:{' '}
+                        Number of acticles:{" "}
                         {cartItems.reduce((a, c) => {
                           return a + c.quantity;
                         }, 0)}
@@ -137,21 +137,21 @@ function CartPage() {
                         Total: $
                         {cartItems.reduce((a, c) => {
                           return a + c.price * c.quantity;
-                        }, 0)}{' '}
+                        }, 0)}{" "}
                       </h3>
                     </ListGroupItem>
                     <ListGroup.Item>
-                      <div className='d-grid'>
+                      <div className="d-grid">
                         <Button
-                          className='mb-2'
-                          variant='primary'
+                          className="mb-2"
+                          variant="primary"
                           onClick={checkoutHandler}
                         >
                           Proceed to checkout
                         </Button>
                         <Button
-                          variant='secondary'
-                          onClick={() => navigate('/')}
+                          variant="secondary"
+                          onClick={() => navigate("/")}
                         >
                           Continue Shopping
                         </Button>
