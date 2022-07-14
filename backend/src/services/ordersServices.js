@@ -35,4 +35,3 @@ export default class OrdersServices {
     return { order: newOrder };
   }
 }
-
