@@ -41,7 +41,6 @@ function PlaceOrderPage() {
   const { cart, userInfo } = state;
 
   useEffect(() => {
-    console.log("cart :>> ", cart);
     if (!cart.paymentMethod) {
       navigate("/payment");
       return;
