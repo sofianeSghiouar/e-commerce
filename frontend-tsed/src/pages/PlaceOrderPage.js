@@ -82,9 +82,9 @@ function PlaceOrderPage() {
           }
         }
       );
-      storeDispatch({ type: 'CART_CLEAR' });
-      dispatch({ type: 'CREATE_SUCCESS' });
-      localStorage.removeItem('cartItems');
+      // storeDispatch({ type: 'CART_CLEAR' });
+      // dispatch({ type: 'CREATE_SUCCESS' });
+      // localStorage.removeItem('cartItems');
       console.log('data :>> ', data);
       navigate(`/order/${data.id}`);
     } catch (error) {
