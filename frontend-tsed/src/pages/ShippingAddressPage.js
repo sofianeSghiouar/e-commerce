@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Button, Form } from 'react-bootstrap/esm';
-import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
-import CheckoutSteps from '../components/CheckoutSteps.js';
-import { Store } from '../Store';
+import React, { useState, useContext } from "react";
+import { Button, Form } from "react-bootstrap/esm";
+import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+import CheckoutSteps from "../components/CheckoutSteps.js";
+import { Store } from "../Store";
 
 function ShippingAddressPage() {
   const navigate = useNavigate();
@@ -11,18 +11,18 @@ function ShippingAddressPage() {
   const {
     cart: { shippingAddress }
   } = state;
-  const [fullName, setFullName] = useState(shippingAddress.fullName || '');
-  const [address, setAddress] = useState(shippingAddress.address || '');
-  const [city, setCity] = useState(shippingAddress.city || '');
+  const [fullName, setFullName] = useState(shippingAddress.fullName || "");
+  const [address, setAddress] = useState(shippingAddress.address || "");
+  const [city, setCity] = useState(shippingAddress.city || "");
   const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode || ''
+    shippingAddress.postalCode || ""
   );
-  const [country, setCountry] = useState(shippingAddress.country || '');
+  const [country, setCountry] = useState(shippingAddress.country || "");
 
   const submitHandler = (e) => {
     e.preventDefault();
     storeDispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
+      type: "SAVE_SHIPPING_ADDRESS",
       payload: {
         fullName,
         address,
@@ -32,7 +32,7 @@ function ShippingAddressPage() {
       }
     });
     localStorage.setItem(
-      'shippingAddress',
+      "shippingAddress",
       JSON.stringify({
         fullName,
         address,
@@ -41,7 +41,7 @@ function ShippingAddressPage() {
         country
       })
     );
-    navigate('/payment');
+    navigate("/payment");
   };
   return (
     <div>
@@ -49,10 +49,10 @@ function ShippingAddressPage() {
         <title>Shipping</title>
       </Helmet>
       <CheckoutSteps step1></CheckoutSteps>
-      <div className='container small-container'>
-        <h1 className='my-3'>Shipping</h1>
+      <div className="container small-container">
+        <h1 className="my-3">Shipping</h1>
         <Form onSubmit={submitHandler}>
-          <Form.Group className='mb-3' controlId='fullName'>
+          <Form.Group className="mb-3" controlId="fullName">
             <Form.Label>Full Name</Form.Label>
             <Form.Control
               value={fullName}
@@ -60,7 +60,7 @@ function ShippingAddressPage() {
               required
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='address'>
+          <Form.Group className="mb-3" controlId="address">
             <Form.Label>Address</Form.Label>
             <Form.Control
               value={address}
@@ -68,7 +68,7 @@ function ShippingAddressPage() {
               required
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='city'>
+          <Form.Group className="mb-3" controlId="city">
             <Form.Label>City</Form.Label>
             <Form.Control
               value={city}
@@ -76,7 +76,7 @@ function ShippingAddressPage() {
               required
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='postalCode'>
+          <Form.Group className="mb-3" controlId="postalCode">
             <Form.Label>Postal Code</Form.Label>
             <Form.Control
               value={postalCode}
@@ -84,7 +84,7 @@ function ShippingAddressPage() {
               required
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='country'>
+          <Form.Group className="mb-3" controlId="country">
             <Form.Label>Country</Form.Label>
             <Form.Control
               value={country}
@@ -92,8 +92,8 @@ function ShippingAddressPage() {
               required
             />
           </Form.Group>
-          <div className='mb-3'>
-            <Button variant='dark' type='submit'>
+          <div className="mb-3">
+            <Button variant="dark" type="submit">
               Continue
             </Button>
           </div>

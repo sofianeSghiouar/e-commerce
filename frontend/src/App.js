@@ -1,57 +1,57 @@
-import { useContext, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
+import { useContext, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import {
   Container,
   Nav,
   Navbar,
   Badge,
   NavDropdown
-} from 'react-bootstrap/esm';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+} from "react-bootstrap/esm";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { Store } from './Store';
-import HomePage from './pages/HomePage';
-import ProductPage from './pages/ProductPage';
-import CartPage from './pages/CartPage';
-import LoginPage from './pages/LoginPage';
-import ShippingAddressPage from './pages/ShippingAddressPage';
-import PaymentMethodPage from './pages/PaymentMethodPage';
-import RegisterPage from './pages/RegisterPage';
-import PlaceOrderPage from './pages/PlaceOrderPage';
+import { Store } from "./Store";
+import HomePage from "./pages/HomePage";
+import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
+import LoginPage from "./pages/LoginPage";
+import ShippingAddressPage from "./pages/ShippingAddressPage";
+import PaymentMethodPage from "./pages/PaymentMethodPage";
+import RegisterPage from "./pages/RegisterPage";
+import PlaceOrderPage from "./pages/PlaceOrderPage";
 
 function App() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
   const logoutHandler = () => {
-    storeDispatch({ type: 'USER_LOGOUT' });
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('shippingAddress');
-    localStorage.removeItem('paymentMethod');
+    storeDispatch({ type: "USER_LOGOUT" });
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("shippingAddress");
+    localStorage.removeItem("paymentMethod");
   };
 
   return (
     <BrowserRouter>
-      <div className='d-flex flex-column app-container'>
+      <div className="d-flex flex-column app-container">
         <header>
-          <ToastContainer position='bottom-center' limit={1} />
-          <Navbar bg='dark' variant='dark'>
+          <ToastContainer position="bottom-center" limit={1} />
+          <Navbar bg="dark" variant="dark">
             <Container>
-              <LinkContainer to='/'>
+              <LinkContainer to="/">
                 <Navbar.Brand>The Good Deals</Navbar.Brand>
               </LinkContainer>
               <Nav>
-                <Link to='/cart' className='nav-link'>
+                <Link to="/cart" className="nav-link">
                   <i
                     className={`typcn typcn-shopping-cart icon-cart ${
-                      cart.cartItems.length > 0 ? 'text-warning' : 'text-light'
+                      cart.cartItems.length > 0 ? "text-warning" : "text-light"
                     }`}
                   >
                     {cart.cartItems.length > 0 && (
-                      <Badge pill bg='danger' className='cart-items-badge'>
+                      <Badge pill bg="danger" className="cart-items-badge">
                         {cart.cartItems.reduce((a, item) => {
                           return a + item.quantity || 0;
                         }, 0)}
@@ -62,28 +62,28 @@ function App() {
                 {userInfo ? (
                   <NavDropdown
                     title={userInfo.username}
-                    id='basic-nav-dropdown'
-                    className='nav-link'
+                    id="basic-nav-dropdown"
+                    className="nav-link"
                   >
-                    {' '}
-                    <LinkContainer to='/profile'>
+                    {" "}
+                    <LinkContainer to="/profile">
                       <NavDropdown.Item>User Profile</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to='/orderHistory'>
+                    <LinkContainer to="/orderHistory">
                       <NavDropdown.Item>Order History</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Divider />
                     <Link
-                      to='/'
-                      className='dropdown-item'
+                      to="/"
+                      className="dropdown-item"
                       onClick={logoutHandler}
                     >
                       Logout
                     </Link>
                   </NavDropdown>
                 ) : (
-                  <Nav.Item className='nav-link align-self-center'>
-                    <Link to={'/login'} className='nav-link'>
+                  <Nav.Item className="nav-link align-self-center">
+                    <Link to={"/login"} className="nav-link">
                       Login
                     </Link>
                   </Nav.Item>
@@ -93,21 +93,21 @@ function App() {
           </Navbar>
         </header>
         <main>
-          <Container className='mt-4'>
+          <Container className="mt-4">
             <Routes>
-              <Route path='/cart' element={<CartPage />} />
-              <Route path='/product/:slug' element={<ProductPage />} />
-              <Route path='/login' element={<LoginPage />} />
-              <Route path='/register' element={<RegisterPage />} />
-              <Route path='/shipping' element={<ShippingAddressPage />} />
-              <Route path='/payment' element={<PaymentMethodPage />} />
-              <Route path='/placeorder' element={<PlaceOrderPage />} />
-              <Route path='/' element={<HomePage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/product/:slug" element={<ProductPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/shipping" element={<ShippingAddressPage />} />
+              <Route path="/payment" element={<PaymentMethodPage />} />
+              <Route path="/placeorder" element={<PlaceOrderPage />} />
+              <Route path="/" element={<HomePage />} />
             </Routes>
           </Container>
         </main>
         <footer>
-          <div className='text-center'>All rights reserved</div>
+          <div className="text-center">All rights reserved</div>
         </footer>
       </div>
     </BrowserRouter>

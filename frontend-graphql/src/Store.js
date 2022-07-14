@@ -1,27 +1,27 @@
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 
 export const Store = React.createContext();
 
 const initialState = {
   cart: {
-    shippingAddress: localStorage.getItem('shippingAddress')
-      ? JSON.parse(localStorage.getItem('shippingAddress'))
+    shippingAddress: localStorage.getItem("shippingAddress")
+      ? JSON.parse(localStorage.getItem("shippingAddress"))
       : {},
-    cartItems: localStorage.getItem('cartItems')
-      ? JSON.parse(localStorage.getItem('cartItems'))
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
-    paymentMethod: localStorage.getItem('paymentMethod')
-      ? localStorage.getItem('paymentMethod')
-      : ''
+    paymentMethod: localStorage.getItem("paymentMethod")
+      ? localStorage.getItem("paymentMethod")
+      : ""
   },
-  userInfo: localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo'))
+  userInfo: localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
     : null
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'CART_ADD_ITEM':
+    case "CART_ADD_ITEM":
       const newItem = action.payload;
       const alreadyInCart = state.cart.cartItems.find((item) => {
         return item.id === newItem.id;
@@ -31,38 +31,38 @@ function reducer(state, action) {
             return item.id === newItem.id ? newItem : item;
           })
         : [...state.cart.cartItems, newItem];
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
-    case 'CART_REMOVE_ITEM': {
+    case "CART_REMOVE_ITEM": {
       const cartItems = state.cart.cartItems.filter(
         (item) => item.id !== action.payload.id
       );
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-    case 'USER_LOGIN':
-    case 'USER_REGISTER': {
+    case "USER_LOGIN":
+    case "USER_REGISTER": {
       return { ...state, userInfo: action.payload };
     }
-    case 'USER_LOGOUT': {
+    case "USER_LOGOUT": {
       return {
         ...state,
         cart: {
           ...state.cart,
           cartItems: [],
           shippingAddress: {},
-          paymentMethod: ''
+          paymentMethod: ""
         },
         userInfo: null
       };
     }
-    case 'SAVE_SHIPPING_ADDRESS': {
+    case "SAVE_SHIPPING_ADDRESS": {
       return {
         ...state,
         cart: { ...state.cart, shippingAddress: action.payload }
       };
     }
-    case 'SAVE_PAYMENT_METHOD': {
+    case "SAVE_PAYMENT_METHOD": {
       return {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload }
