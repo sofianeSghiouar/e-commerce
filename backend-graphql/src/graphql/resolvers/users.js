@@ -1,4 +1,4 @@
-import UsersServices from '../../services/usersServices.js';
+import UsersServices from "../../services/usersServices.js";
 
 const usersServices = new UsersServices();
 export default {

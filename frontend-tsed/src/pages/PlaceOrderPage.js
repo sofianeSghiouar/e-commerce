@@ -40,23 +40,29 @@ function PlaceOrderPage() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
-  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
-
-  cart.itemsPrice = round2(
-    cart.cartItems.reduce((a, b) => {
-      return a + b.price * b.quantity;
-    }, 0)
-  );
-  cart.shippingPrice = round2(cart.itemsPrice > 50 ? 0 : 12);
-  cart.taxPrice = round2(cart.itemsPrice * (19.6 / 100));
-  cart.totalPrice = round2(
-    cart.itemsPrice + cart.shippingPrice + cart.taxPrice
-  );
-
   useEffect(() => {
     if (!cart.paymentMethod) {
       navigate("/payment");
       return;
+    }
+
+    console.log("cart :>> ", cart);
+    async function calculatePrices() {
+      const { data } = await axios.post(
+        "http://localhost:8083/rest/order/cost",
+        { orderItems: cart.cartItems },
+        {
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${userInfo.token}`
+          }
+        }
+      );
+      console.log("data :====> ", data);
+      storeDispatch({ type: "ORDER_COST", payload: data.orderCost });
+    }
+    if (!cart.orderCost) {
+      calculatePrices();
     }
   }, [cart, navigate]);
 
@@ -64,15 +70,15 @@ function PlaceOrderPage() {
     try {
       dispatch({ type: "CREATE_REQUEST" });
       const { data } = await axios.post(
-        "http://localhost:8083/rest/order",
+        "http://localhost:8083/rest/order/purchase",
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
           paymentMethod: cart.paymentMethod,
-          shippingPrice: cart.shippingPrice,
-          taxPrice: cart.taxPrice,
-          itemsPrice: cart.itemsPrice,
-          totalPrice: cart.totalPrice
+          shippingPrice: cart.orderCost.shippingPrice,
+          taxPrice: cart.orderCost.taxPrice,
+          itemsPrice: cart.orderCost.itemsPrice,
+          totalPrice: cart.orderCost.totalPrice
         },
         {
           headers: {
@@ -85,7 +91,7 @@ function PlaceOrderPage() {
       // dispatch({ type: 'CREATE_SUCCESS' });
       // localStorage.removeItem('cartItems');
       console.log("data :>> ", data);
-      // navigate(`/order/${data.order._id}`);
+      // navigate(`/order/${data.id}`);
     } catch (error) {
       dispatch({ type: "CREATE_FAIL" });
       console.log("error :>> ", error);
@@ -156,24 +162,24 @@ function PlaceOrderPage() {
         </Col>
         <Col md={4}>
           <Card>
-            {/* <Card.Title>Order Summary</Card.Title> */}
+            <Card.Title>Order Summary</Card.Title>
             <ListGroup>
               <ListGroupItem>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${cart.itemsPrice.toFixed(2)}</Col>
+                  <Col>${cart.orderCost && cart.orderCost.itemsPrice}</Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${cart.shippingPrice.toFixed(2)}</Col>
+                  <Col>${cart.orderCost && cart.orderCost.shippingPrice}</Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${cart.taxPrice.toFixed(2)}</Col>
+                  <Col>${cart.orderCost && cart.orderCost.taxPrice}</Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
@@ -182,7 +188,9 @@ function PlaceOrderPage() {
                     <strong>Order Total</strong>
                   </Col>
                   <Col>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>
+                      ${cart.orderCost && cart.orderCost.totalPrice}
+                    </strong>
                   </Col>
                 </Row>
               </ListGroupItem>

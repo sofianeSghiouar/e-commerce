@@ -6,7 +6,6 @@
   "type": "module",
   "private": true,
   "scripts": {
-
     "clean": "rimraf lib",
     "compile": "npm run clean && babel src -d lib && cd .. && yarn prettier",
     "build": "docker compose build",

@@ -1,18 +1,18 @@
-import bcrypt from 'bcryptjs';
-import { UserInputError } from 'apollo-server';
-import UserModel from '../../models/user.js';
-import { generateToken } from '../../utils/generateToken.js';
+import bcrypt from "bcryptjs";
+import { UserInputError } from "apollo-server";
+import UserModel from "../../models/user.js";
+import { generateToken } from "../../utils/generateToken.js";
 import {
   validateLoginInput,
   validateRegisterInput
-} from '../../utils/validators.js';
+} from "../../utils/validators.js";
 export default {
   Mutation: {
     userLogin: async (_, { loginInput: { email, password } }) => {
       const { valid, errors } = validateLoginInput(email, password);
 
       if (!valid) {
-        throw new UserInputError('Error', {
+        throw new UserInputError("Error", {
           errors
         });
       }
@@ -22,8 +22,8 @@ export default {
       });
 
       if (!user) {
-        errors.general = 'User not found';
-        throw new UserInputError('User not found', {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", {
           errors
         });
       }
@@ -31,8 +31,8 @@ export default {
       const match = bcrypt.compareSync(password, user.password);
 
       if (!match) {
-        errors.general = 'Wrong credentials';
-        throw new UserInputError('Wrong credentials', {
+        errors.general = "Wrong credentials";
+        throw new UserInputError("Wrong credentials", {
           errors
         });
       }
@@ -56,7 +56,7 @@ export default {
       );
 
       if (!valid) {
-        throw new UserInputError('Error', {
+        throw new UserInputError("Error", {
           errors
         });
       }
@@ -66,7 +66,7 @@ export default {
       });
 
       if (user) {
-        throw new UserInputError('This email is taken !');
+        throw new UserInputError("This email is taken !");
       }
 
       try {
@@ -78,7 +78,7 @@ export default {
         });
         const result = await newUser.save();
         const token = generateToken(result);
-        console.log('newUser :>> ', result);
+        console.log("newUser :>> ", result);
         return { ...result._doc, id: result._id, token };
       } catch (error) {
         throw new Error(error.message);

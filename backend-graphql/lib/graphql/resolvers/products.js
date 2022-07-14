@@ -1,4 +1,4 @@
-import ProductModel from '../../models/product.js';
+import ProductModel from "../../models/product.js";
 export default {
   Query: {
     getProducts: async () => {

@@ -52,7 +52,8 @@ function reducer(state, action) {
           cartItems: [],
           shippingAddress: {},
           paymentMethod: "",
-          orderSummary: {}
+          orderSummary: {},
+          orderTotalPrice: {}
         },
         userInfo: null
       };
@@ -72,13 +73,24 @@ function reducer(state, action) {
     case "ORDER_SUMMARY": {
       return {
         ...state,
-        cart: { ...state.cart, orderSummary: action.payload }
+        cart: { ...state.cart, orderSummary: { ...action.payload } }
+      };
+    }
+    case "ORDER_COST": {
+      return {
+        ...state,
+        cart: { ...state.cart, orderCost: { ...action.payload } }
       };
     }
     case "CART_CLEAR": {
       return {
         ...state,
-        cart: { ...state.cart, cartItems: [] }
+        cart: {
+          ...state.cart,
+          cartItems: [],
+          orderSummary: {},
+          orderTotalPrice: {}
+        }
       };
     }
     default:

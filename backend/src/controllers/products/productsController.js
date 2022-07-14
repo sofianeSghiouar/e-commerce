@@ -1,4 +1,4 @@
-import ProductsServices from '../../services/productsServices.js';
+import ProductsServices from "../../services/productsServices.js";
 export class ProductsController {
   productServices = new ProductsServices();
 

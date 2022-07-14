@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "prettier": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "prettier": "prettier --write . './**/*.{js,jsx}' --config ./.prettierrc"
   },
   "eslintConfig": {
     "extends": [

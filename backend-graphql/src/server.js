@@ -1,9 +1,9 @@
-import dotenv from 'dotenv';
-import { ApolloServer } from 'apollo-server';
+import dotenv from "dotenv";
+import { ApolloServer } from "apollo-server";
 
-import start from './db/connect.js';
-import typeDefs from './graphql/typeDefs.js';
-import resolvers from './graphql/resolvers/index.js';
+import start from "./db/connect.js";
+import typeDefs from "./graphql/typeDefs.js";
+import resolvers from "./graphql/resolvers/index.js";
 dotenv.config();
 
 const server = new ApolloServer({
@@ -13,7 +13,7 @@ const server = new ApolloServer({
 });
 
 const PORT = process.env.PORT || 8000;
-console.log('PORT', PORT);
+console.log("PORT", PORT);
 
 start().then(async () => {
   return await server.listen({ port: PORT }).then(({ url }) => {

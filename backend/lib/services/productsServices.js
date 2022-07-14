@@ -1,10 +1,10 @@
-import ProductModel from '../models/product.js';
+import ProductModel from "../models/product.js";
 export default class ProductsServices {
   async getProducts() {
     const products = await ProductModel.find();
 
     if (!products) {
-      throw new Error('products not found');
+      throw new Error("products not found");
     }
 
     return products;
@@ -16,7 +16,7 @@ export default class ProductsServices {
     });
 
     if (!product) {
-      throw new Error('products not found');
+      throw new Error("products not found");
     }
 
     return product;
@@ -26,7 +26,7 @@ export default class ProductsServices {
     const product = await ProductModel.findById(id);
 
     if (!product) {
-      throw new Error('products not found');
+      throw new Error("products not found");
     }
 
     return product;

@@ -23,10 +23,10 @@ export default {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: 'coverage',
+  coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ['\\\\node_modules\\\\'],
+  coveragePathIgnorePatterns: ["\\\\node_modules\\\\"],
 
   // Indicates which provider should be used to instrument code for coverage
   // coverageProvider: "babel",
@@ -74,7 +74,7 @@ export default {
   // ],
 
   // An array of file extensions your modules use
-  moduleFileExtensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+  moduleFileExtensions: ["js", "mjs", "jsx", "ts", "tsx"],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
@@ -147,10 +147,10 @@ export default {
   //   "**/?(*.)+(spec|test).[tj]s?(x)"
   // ],
 
-  testPathIgnorePatterns: ['\\\\node_modules\\\\', './lib'],
+  testPathIgnorePatterns: ["\\\\node_modules\\\\", "./lib"],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
-  testRegex: '((\\.|/*.)(spec))\\.js?$',
+  testRegex: "((\\.|/*.)(spec))\\.js?$",
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,
@@ -160,7 +160,7 @@ export default {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.[t|j]sx?$': 'babel-jest'
+    "^.+\\.[t|j]sx?$": "babel-jest"
   }
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
