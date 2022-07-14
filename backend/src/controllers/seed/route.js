@@ -5,7 +5,7 @@ const seedController = new SeedController();
 const routes = [
   {
     path: '/seed/reset',
-    method: 'PUT',
+    method: 'GET',
     handler: seedController.resetDB.bind(seedController)
   }
 ];

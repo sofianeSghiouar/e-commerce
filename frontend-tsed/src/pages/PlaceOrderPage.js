@@ -54,6 +54,7 @@ function PlaceOrderPage() {
   );
 
   useEffect(() => {
+    console.log('cart :>> ', cart);
     if (!cart.paymentMethod) {
       navigate('/payment');
       return;
@@ -81,11 +82,11 @@ function PlaceOrderPage() {
           }
         }
       );
-      // storeDispatch({ type: 'CART_CLEAR' });
-      // dispatch({ type: 'CREATE_SUCCESS' });
-      // localStorage.removeItem('cartItems');
+      storeDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
       console.log('data :>> ', data);
-      // navigate(`/order/${data.order._id}`);
+      navigate(`/order/${data.id}`);
     } catch (error) {
       dispatch({ type: 'CREATE_FAIL' });
       console.log('error :>> ', error);

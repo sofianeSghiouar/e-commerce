@@ -3,7 +3,8 @@ export default class SeedController {
   seedService = new SeedService();
   async resetDB() {
     try {
-      await this.seedService.resetDatabase();
+      const result = await this.seedService.resetDatabase();
+      return result;
     } catch (error) {
       throw new Error(error);
     }
