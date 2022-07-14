@@ -1,6 +1,6 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import CheckoutSteps from '../components/CheckoutSteps';
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import CheckoutSteps from "../components/CheckoutSteps";
 
 function PaymentPage() {
   return (
@@ -9,8 +9,8 @@ function PaymentPage() {
         <title>Payment</title>
       </Helmet>
       <CheckoutSteps step1 step2></CheckoutSteps>
-      <div className='container small-container'>
-        <h1 className='my-3'>Payment</h1>
+      <div className="container small-container">
+        <h1 className="my-3">Payment</h1>
       </div>
     </div>
   );

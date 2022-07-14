@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/esm/Card';
-import Button from 'react-bootstrap/esm/Button';
-import { useQuery } from '@apollo/client';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import Card from "react-bootstrap/esm/Card";
+import Button from "react-bootstrap/esm/Button";
+import { useQuery } from "@apollo/client";
 
-import Rating from './Rating';
-import { Store } from '../Store';
-import Queries from '../utils/graphql/gqlQueries';
-import Loading from './Loading';
-import Message from './Message';
+import Rating from "./Rating";
+import { Store } from "../Store";
+import Queries from "../utils/graphql/gqlQueries";
+import Loading from "./Loading";
+import Message from "./Message";
 
 function Product(props) {
   const { product } = props;
@@ -30,11 +30,11 @@ function Product(props) {
       const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
 
       if (currentProduct.countInStock < article.quantity) {
-        window.alert('Sorry. Product is out of stock');
+        window.alert("Sorry. Product is out of stock");
         return;
       }
       const payload = { ...article, quantity };
-      storeDispatch({ type: 'CART_ADD_ITEM', payload });
+      storeDispatch({ type: "CART_ADD_ITEM", payload });
     }
   }
   return (
@@ -45,19 +45,19 @@ function Product(props) {
         </div>
       ) : error ? (
         <div>
-          <Message variant='danger'>{error.message}</Message>
+          <Message variant="danger">{error.message}</Message>
         </div>
       ) : (
         <Card>
           <Link to={`/product/${product.slug}`}>
             <Card.Img
-              variant='top'
+              variant="top"
               src={product.image}
-              className='card-img-top'
+              className="card-img-top"
               alt={product.name}
             />
           </Link>
-          <Card.Body className='product-info'>
+          <Card.Body className="product-info">
             <Link to={`/product/${product.slug}`}>
               <Card.Title>{product.name}</Card.Title>
             </Link>
@@ -65,7 +65,7 @@ function Product(props) {
             <Card.Text>${product.price}</Card.Text>
 
             {product.countInStock === 0 ? (
-              <Button variant='light' className='text-danger' disabled>
+              <Button variant="light" className="text-danger" disabled>
                 Out of Stock
               </Button>
             ) : (
