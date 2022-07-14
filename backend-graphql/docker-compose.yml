@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   server:
     image: thegooddeal2
@@ -9,7 +9,7 @@ services:
     environment:
       - DB_URL=mongodb+srv://thegooddeal:JtiMPgFBGQ6yY0MS@thegooddeal.rmmdg.mongodb.net/thegoodplan?retryWrites=true&w=majority
     ports:
-      - '8080:80'
+      - "8080:80"
     depends_on:
       - mongo
   mongo:
@@ -18,6 +18,6 @@ services:
     volumes:
       - mdb-data2:/data/db
     ports:
-      - '27027:27027'
+      - "27027:27027"
 volumes:
   mdb-data2:

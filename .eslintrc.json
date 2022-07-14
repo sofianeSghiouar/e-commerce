@@ -13,6 +13,6 @@
     "no-unused-vars": [1, {}],
     "no-fallthrough": "warn",
     "no-constant-condition": ["error", { "checkLoops": false }],
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]  
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
   }
 }
