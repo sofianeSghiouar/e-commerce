@@ -20,7 +20,7 @@ app.use('/api', usersRouter);
 app.use('/api', seedRouter);
 app.use('/api', ordersRouter);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(500).json({ message: err.message });
 });
 

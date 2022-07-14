@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import UserModel from '../models/user.js';
 import { generateToken } from '../utils/generateToken.js';
 export default class UserServices {
-  async login(password, email, res) {
+  async login(password, email) {
     const user = await UserModel.findOne({
       email: email
     });
