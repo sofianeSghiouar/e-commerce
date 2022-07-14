@@ -1,7 +1,7 @@
 import OrderModel from '../models/order.js';
 
 export default class OrdersServices {
-  async createOrder(user, body, res) {
+  async createOrder(user, body) {
     const orderItems = body.orderItems.map((item) => {
       return {
         slug: item.slug,
