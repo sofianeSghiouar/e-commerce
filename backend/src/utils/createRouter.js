@@ -1,5 +1,5 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
+import express from "express";
+import expressAsyncHandler from "express-async-handler";
 
 export function createRouter(routes) {
   const router = express.Router();
@@ -20,10 +20,10 @@ export function createHandler({ handler, responseStatus = 200 }) {
       result;
     } catch (e) {
       return res.status(e.status || 500).json({
-        name: e.name || 'INTERNAL_ERROR',
+        name: e.name || "INTERNAL_ERROR",
         message: e.message,
         status: e.status || 500,
-        stack: process.env.NODE_ENV !== 'production' ? e.stack : null
+        stack: process.env.NODE_ENV !== "production" ? e.stack : null
       });
     }
   });

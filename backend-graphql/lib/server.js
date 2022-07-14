@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
-import { ApolloServer } from 'apollo-server';
-import start from './db/connect.js';
-import typeDefs from './graphql/typeDefs.js';
-import resolvers from './graphql/resolvers/index.js';
+import dotenv from "dotenv";
+import { ApolloServer } from "apollo-server";
+import start from "./db/connect.js";
+import typeDefs from "./graphql/typeDefs.js";
+import resolvers from "./graphql/resolvers/index.js";
 dotenv.config();
 const server = new ApolloServer({
   typeDefs,

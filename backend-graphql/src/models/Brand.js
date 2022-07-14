@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const brandSchema = new mongoose.Schema({
   name: String,
@@ -9,11 +9,11 @@ const brandSchema = new mongoose.Schema({
       products: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'products'
+          ref: "products"
         }
       ]
     }
   ]
 });
 
-export default mongoose.model('brands', brandSchema);
+export default mongoose.model("brands", brandSchema);

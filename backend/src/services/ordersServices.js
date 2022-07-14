@@ -1,4 +1,4 @@
-import OrderModel from '../models/order.js';
+import OrderModel from "../models/order.js";
 
 export default class OrdersServices {
   async createOrder(user, body, res) {

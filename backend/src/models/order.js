@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema(
         price: { type: Number, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'products',
+          ref: "products",
           required: true
         }
       }
@@ -36,7 +36,7 @@ const orderSchema = new mongoose.Schema(
     totalPrice: { type: Number, required: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
       required: true
     },
     isPaid: { type: Boolean, default: false },
@@ -49,4 +49,4 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('orders', orderSchema);
+export default mongoose.model("orders", orderSchema);

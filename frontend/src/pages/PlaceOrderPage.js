@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { useReducer } from 'react';
-import { useContext } from 'react';
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useReducer } from "react";
+import { useContext } from "react";
 import {
   Button,
   Card,
@@ -10,22 +10,22 @@ import {
   ListGroup,
   ListGroupItem,
   Row
-} from 'react-bootstrap';
-import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import CheckoutSteps from '../components/CheckoutSteps';
-import { Store } from '../Store';
-import getErrorMessage from '../utils';
-import Loading from '../components/Loading';
+} from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import CheckoutSteps from "../components/CheckoutSteps";
+import { Store } from "../Store";
+import getErrorMessage from "../utils";
+import Loading from "../components/Loading";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'CREATE_REQUEST':
+    case "CREATE_REQUEST":
       return { ...state, loading: true };
-    case 'CREATE_SUCCESS':
+    case "CREATE_SUCCESS":
       return { ...state, loading: false };
-    case 'CREATE_FAIL':
+    case "CREATE_FAIL":
       return { ...state, loading: false };
     default:
       return state;
@@ -55,16 +55,16 @@ function PlaceOrderPage() {
 
   useEffect(() => {
     if (!cart.paymentMethod) {
-      navigate('/payment');
+      navigate("/payment");
       return;
     }
   }, [cart, navigate]);
 
   const placeOrderHandler = async () => {
     try {
-      dispatch({ type: 'CREATE_REQUEST' });
+      dispatch({ type: "CREATE_REQUEST" });
       const { data } = await axios.post(
-        'http://localhost:8000/api/order',
+        "http://localhost:8000/api/order",
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
@@ -76,18 +76,18 @@ function PlaceOrderPage() {
         },
         {
           headers: {
-            'content-type': 'application/json',
+            "content-type": "application/json",
             authorization: `Bearer ${userInfo.token}`
           }
         }
       );
-      storeDispatch({ type: 'CART_CLEAR' });
-      dispatch({ type: 'CREATE_SUCCESS' });
-      localStorage.removeItem('cartItems');
-      console.log('data :>> ', data);
+      storeDispatch({ type: "CART_CLEAR" });
+      dispatch({ type: "CREATE_SUCCESS" });
+      localStorage.removeItem("cartItems");
+      console.log("data :>> ", data);
       navigate(`/order/${data.order._id}`);
     } catch (error) {
-      dispatch({ type: 'CREATE_FAIL' });
+      dispatch({ type: "CREATE_FAIL" });
       toast.error(getErrorMessage(error));
     }
   };
@@ -98,37 +98,37 @@ function PlaceOrderPage() {
       <Helmet>
         <title>Order Summary</title>
       </Helmet>
-      <h1 className='my-3'>Order Summary</h1>
+      <h1 className="my-3">Order Summary</h1>
       <Row>
         <Col md={8}>
-          <Card className='mb-3'>
+          <Card className="mb-3">
             <Card.Body>
               <Card.Title>Shipping</Card.Title>
               <Card.Text>
                 <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                <strong>Address:</strong> {cart.shippingAddress.address},{' '}
-                {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},{' '}
+                <strong>Address:</strong> {cart.shippingAddress.address},{" "}
+                {cart.shippingAddress.city}, {cart.shippingAddress.postalCode},{" "}
                 {cart.shippingAddress.country}
               </Card.Text>
-              <Link to='/shipping'>Edit</Link>
+              <Link to="/shipping">Edit</Link>
             </Card.Body>
           </Card>
-          <Card className='mb-3'>
+          <Card className="mb-3">
             <Card.Body>
               <Card.Title>Payment</Card.Title>
               <Card.Text>
                 <strong>Method:</strong> {cart.paymentMethod}
               </Card.Text>
-              <Link to='/placeorder'>Edit</Link>
+              <Link to="/placeorder">Edit</Link>
             </Card.Body>
           </Card>
-          <Card className='mb-3'>
+          <Card className="mb-3">
             <Card.Body>
               <Card.Title>Items</Card.Title>
-              <ListGroup variant='flush'>
+              <ListGroup variant="flush">
                 {cart.cartItems.map((item) => (
                   <ListGroupItem key={item._id}>
-                    <Row className='align-items-center'>
+                    <Row className="align-items-center">
                       <Col md={6} sm={5}>
                         <Image
                           src={item.image}
@@ -136,7 +136,7 @@ function PlaceOrderPage() {
                           rounded
                           thumbnail
                           fluid
-                        />{' '}
+                        />{" "}
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </Col>
                       <Col md={3} sm={2}>
@@ -149,7 +149,7 @@ function PlaceOrderPage() {
                   </ListGroupItem>
                 ))}
               </ListGroup>
-              <Link to='/cart'>Edit</Link>
+              <Link to="/cart">Edit</Link>
             </Card.Body>
           </Card>
         </Col>
@@ -187,11 +187,11 @@ function PlaceOrderPage() {
               </ListGroupItem>
             </ListGroup>
           </Card>
-          <div className='d-grid'>
+          <div className="d-grid">
             <Button
-              type='button'
+              type="button"
               disabled={cart.cartItems.length === 0}
-              className='mt-3'
+              className="mt-3"
               onClick={placeOrderHandler}
             >
               Continue

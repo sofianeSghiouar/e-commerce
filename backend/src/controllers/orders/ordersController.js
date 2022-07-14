@@ -1,4 +1,4 @@
-import OrdersServices from '../../services/ordersServices.js';
+import OrdersServices from "../../services/ordersServices.js";
 
 export default class OrdersController {
   ordersServices = new OrdersServices();

@@ -1,30 +1,30 @@
-import bcrypt from 'bcryptjs';
-import { UserInputError } from 'apollo-server';
+import bcrypt from "bcryptjs";
+import { UserInputError } from "apollo-server";
 
-import UserModel from '../models/user.js';
-import { generateToken } from '../utils/generateToken.js';
+import UserModel from "../models/user.js";
+import { generateToken } from "../utils/generateToken.js";
 import {
   validateLoginInput,
   validateRegisterInput
-} from '../utils/validators.js';
+} from "../utils/validators.js";
 
 export default class UsersServices {
   login = async (email, password) => {
     const { valid, errors } = validateLoginInput(email, password);
 
     if (!valid) {
-      throw new UserInputError('Error', { errors });
+      throw new UserInputError("Error", { errors });
     }
     try {
       const user = await UserModel.findOne({ email: email });
       if (!user) {
-        errors.general = 'User not found';
-        throw new UserInputError('User not found');
+        errors.general = "User not found";
+        throw new UserInputError("User not found");
       }
       const match = bcrypt.compareSync(password, user.password);
       if (!match) {
-        errors.general = 'Wrong credentials';
-        throw new UserInputError('Wrong credentials', { errors });
+        errors.general = "Wrong credentials";
+        throw new UserInputError("Wrong credentials", { errors });
       }
       const token = await generateToken(user);
       return {
@@ -45,11 +45,11 @@ export default class UsersServices {
       confirmPassword
     );
     if (!valid) {
-      throw new UserInputError('Error', { errors });
+      throw new UserInputError("Error", { errors });
     }
     const user = await UserModel.findOne({ email: email });
     if (user) {
-      throw new UserInputError('This email is taken !');
+      throw new UserInputError("This email is taken !");
     }
     try {
       const newUser = await UserModel({

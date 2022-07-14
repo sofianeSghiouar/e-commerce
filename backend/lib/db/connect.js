@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const startDB = async () => {
   try {
@@ -7,7 +7,7 @@ const startDB = async () => {
         useNewUrlParser: true
       })
       .then(() => {
-        console.log('database connected');
+        console.log("database connected");
       });
   } catch (error) {
     throw new Error(error.message);

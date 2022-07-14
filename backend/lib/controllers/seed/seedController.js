@@ -1,4 +1,4 @@
-import SeedService from '../../services/seedService.js';
+import SeedService from "../../services/seedService.js";
 export default class SeedController {
   seedService = new SeedService();
 

@@ -1,6 +1,6 @@
-import bcrypt from 'bcryptjs';
-import UserModel from '../models/user.js';
-import { generateToken } from '../utils/generateToken.js';
+import bcrypt from "bcryptjs";
+import UserModel from "../models/user.js";
+import { generateToken } from "../utils/generateToken.js";
 export default class UserServices {
   async login(password, email, res) {
     const user = await UserModel.findOne({
@@ -20,12 +20,12 @@ export default class UserServices {
       }
     }
 
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 
   async register(name, email, password, confirmPassword) {
     if (password !== confirmPassword) {
-      throw new Error('Passwords not match');
+      throw new Error("Passwords not match");
     }
 
     if (
@@ -33,7 +33,7 @@ export default class UserServices {
         email: email
       })
     ) {
-      throw new Error('User already exist');
+      throw new Error("User already exist");
     }
 
     const user = new UserModel({
