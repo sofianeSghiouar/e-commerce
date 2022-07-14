@@ -41,12 +41,19 @@ function PlaceOrderPage() {
   const { cart, userInfo } = state;
   console.log("cart :>> ", cart);
   useEffect(() => {
+<<<<<<< HEAD
     console.log("cart :>> ", cart);
+=======
+>>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
     if (!cart.paymentMethod) {
       navigate("/payment");
       return;
     }
 
+<<<<<<< HEAD
+=======
+    console.log("cart :>> ", cart);
+>>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
     async function calculatePrices() {
       const { data } = await axios.post(
         "http://localhost:8083/rest/order/cost",
@@ -58,10 +65,17 @@ function PlaceOrderPage() {
           }
         }
       );
+<<<<<<< HEAD
       storeDispatch({ type: "ORDER_COST", payload: data.orderCost });
       localStorage.setItem("orderCost", JSON.stringify(data.orderCost));
     }
     if (!Object.keys(cart.orderCost).length) {
+=======
+      console.log("data :====> ", data);
+      storeDispatch({ type: "ORDER_COST", payload: data.orderCost });
+    }
+    if (!cart.orderCost) {
+>>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
       calculatePrices();
     }
   }, [cart, navigate]);
@@ -87,12 +101,23 @@ function PlaceOrderPage() {
           }
         }
       );
+<<<<<<< HEAD
       storeDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
       localStorage.removeItem("cartItems");
       navigate(`/order/${data.id}`);
     } catch (error) {
       dispatch({ type: "CREATE_FAIL" });
+=======
+      // storeDispatch({ type: 'CART_CLEAR' });
+      // dispatch({ type: 'CREATE_SUCCESS' });
+      // localStorage.removeItem('cartItems');
+      console.log("data :>> ", data);
+      // navigate(`/order/${data.id}`);
+    } catch (error) {
+      dispatch({ type: "CREATE_FAIL" });
+      console.log("error :>> ", error);
+>>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
       toast.error(getErrorMessage(error));
     }
   };
