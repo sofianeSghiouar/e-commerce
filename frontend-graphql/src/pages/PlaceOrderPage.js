@@ -12,7 +12,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { Store } from "../Store";
-import { Mutation } from "../utils/graphql/gqlQueries";
+import gqlMutations from "../utils/graphql/gqlMutations";
 import { useMutation } from "@apollo/client";
 
 function PlaceOrderPage() {
@@ -34,10 +34,8 @@ function PlaceOrderPage() {
     cart.itemsPrice + cart.shippingPrice + cart.taxPrice
   );
 
-  const gqlQuery = new Mutation();
-  const { ORDER_CREATION } = gqlQuery;
-
-  const [orderCreation] = useMutation(ORDER_CREATION, {
+  const mutations = new gqlMutations();
+  const [orderCreationHandler] = useMutation(mutations.ORDER_CREATION, {
     variables: {
       orderItems: cartItems,
       shippingAddress: shippingAddress,
@@ -47,8 +45,8 @@ function PlaceOrderPage() {
       shippingPrice: cart.shippingPrice,
       totalPrice: cart.totalPrice
     },
-    onCompleted: ({ orderCreation }) => {
-      console.log("orderCreation useMutation() ==:>> ", orderCreation);
+    onCompleted: (data) => {
+      console.log("data useMutation() ==:>> ", data);
     }
   });
 
@@ -163,7 +161,7 @@ function PlaceOrderPage() {
               type="button"
               disabled={cartItems.length === 0}
               className="mt-3"
-              onClick={() => orderCreation()}
+              onClick={() => orderCreationHandler()}
             >
               Continue
             </Button>

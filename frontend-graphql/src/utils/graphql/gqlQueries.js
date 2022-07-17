@@ -24,13 +24,3 @@ export class Queries {
     }
   `;
 }
-export class Mutation {
-  ORDER_CREATION = gql`
-    mutation ($OrderInput: OrderInput) {
-      createOrder(orderInput: $OrderInput) {
-        id
-        orderItems
-      }
-    }
-  `;
-}
