@@ -1,6 +1,6 @@
 import OrderModel from "../models/order.js";
-import UserModel from "../models/user.js";
-import verifyToken from "../utils/verifyToken.js";
+// import UserModel from "../models/user.js";
+// import verifyToken from "../utils/verifyToken.js";
 
 export default class OrdersServices {
   createOrder = async (orderInput) => {
@@ -35,11 +35,11 @@ export default class OrdersServices {
         shippingPrice,
         taxPrice,
         totalPrice
-
         // user: user._id
       });
-      const newOrder = await order.save();
-      return { order: newOrder };
+      console.log("order :>> ", order);
+      // const newOrder = await order.save();
+      return { order: "ok" };
     } catch (error) {
       throw new Error(error);
     }

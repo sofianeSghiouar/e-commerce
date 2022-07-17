@@ -5,8 +5,9 @@ export default {
   Mutation: {
     orderCreation: (_, payload, context) => {
       console.log("context orderCreation :>> ", context.authScope);
-      //   return ordersServices.createOrder(payload);
-      return "ok";
+      const result = ordersServices.createOrder(payload);
+      console.log("result :>> ", result);
+      return "test";
     }
   }
 };
