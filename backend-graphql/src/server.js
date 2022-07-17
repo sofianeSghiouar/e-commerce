@@ -9,7 +9,10 @@ dotenv.config();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  cors: true
+  cors: true,
+  context: ({ req }) => ({
+    authScope: req.headers.authorization
+  })
 });
 
 const PORT = process.env.PORT || 8000;

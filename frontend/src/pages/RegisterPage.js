@@ -40,7 +40,7 @@ function RegisterPage() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/users/register",
+        "http://localhost:8001/api/users/register",
         {
           name,
           email,

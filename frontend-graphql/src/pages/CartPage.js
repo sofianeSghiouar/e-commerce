@@ -14,7 +14,7 @@ import { useQuery } from "@apollo/client";
 
 import { Store } from "../Store";
 import Message from "../components/Message";
-import Queries from "../utils/graphql/gqlQueries";
+import { Queries } from "../utils/graphql/gqlQueries";
 import Loading from "../components/Loading";
 
 function CartPage() {

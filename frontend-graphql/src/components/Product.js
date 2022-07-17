@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/client";
 
 import Rating from "./Rating";
 import { Store } from "../Store";
-import Queries from "../utils/graphql/gqlQueries";
+import { Queries } from "../utils/graphql/gqlQueries";
 import Loading from "./Loading";
 import Message from "./Message";
 

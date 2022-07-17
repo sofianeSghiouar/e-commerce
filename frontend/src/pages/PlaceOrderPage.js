@@ -64,7 +64,7 @@ function PlaceOrderPage() {
     try {
       dispatch({ type: "CREATE_REQUEST" });
       const { data } = await axios.post(
-        "http://localhost:8000/api/order",
+        "http://localhost:8001/api/order",
         {
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,
@@ -131,12 +131,13 @@ function PlaceOrderPage() {
                     <Row className="align-items-center">
                       <Col md={6} sm={5}>
                         <Image
+                          className="me-2"
                           src={item.image}
                           alt={item.name}
                           rounded
                           thumbnail
                           fluid
-                        />{" "}
+                        />
                         <Link to={`/product/${item.slug}`}>{item.name}</Link>
                       </Col>
                       <Col md={3} sm={2}>

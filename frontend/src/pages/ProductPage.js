@@ -44,7 +44,7 @@ function ProductPage() {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const result = await axios.get(
-          `http://localhost:8000/api/products/slug/${slug}`
+          `http://localhost:8001/api/products/slug/${slug}`
         );
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (error) {
@@ -64,7 +64,7 @@ function ProductPage() {
     );
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
     const { data } = await axios.get(
-      `http://localhost:8000/api/products/${product._id}`
+      `http://localhost:8001/api/products/${product._id}`
     );
 
     if (data.countInStock < quantity) {

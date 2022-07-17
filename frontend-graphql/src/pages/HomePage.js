@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import Product from "../components/Product";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import Queries from "../utils/graphql/gqlQueries";
+import { Queries } from "../utils/graphql/gqlQueries";
 
 function HomePage() {
   const gqlQuery = new Queries();
