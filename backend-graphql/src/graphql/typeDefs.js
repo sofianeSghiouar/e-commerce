@@ -37,25 +37,9 @@ const typeDefs = gql`
     quantity: Int!
     image: String!
     price: Int!
-    product: ID
-  }
-  input OrderItemsInput {
-    id: ID!
-    slug: String!
-    name: String!
-    quantity: Int!
-    image: String!
-    price: Int!
-    product: ID
+    product: ID!
   }
   type ShippingAddress {
-    fullname: String!
-    address: String!
-    city: String!
-    postalCode: String!
-    country: String!
-  }
-  input ShippingAddressInput {
     fullname: String!
     address: String!
     city: String!
@@ -111,6 +95,22 @@ const typeDefs = gql`
     password: String!
     confirmPassword: String!
   }
+  input OrderItemsInput {
+    id: ID!
+    slug: String!
+    name: String!
+    quantity: Int!
+    image: String!
+    price: Int!
+    # product: ID
+  }
+  input ShippingAddressInput {
+    fullname: String!
+    address: String!
+    city: String!
+    postalCode: String!
+    country: String!
+  }
   input OrderInput {
     orderItems: [OrderItemsInput]!
     shippingAddress: ShippingAddressInput!
@@ -129,7 +129,7 @@ const typeDefs = gql`
   type Mutation {
     userLogin(loginInput: LoginInput): UserLogin
     userRegister(registerInput: RegisterInput): UserRegister
-    orderCreation(orderInput: OrderInput): String
+    orderCreation(orderInput: OrderInput): Order
   }
 `;
 
