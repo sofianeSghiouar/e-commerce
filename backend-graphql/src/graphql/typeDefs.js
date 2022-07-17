@@ -32,20 +32,36 @@ const typeDefs = gql`
   }
   type OrderItems {
     id: ID!
-    slug: String!
+    brand: String!
+    category: String!
     name: String!
-    quantity: Int!
+    slug: String!
     image: String!
-    price: Int!
+    images: [String]!
+    description: String!
+    price: Float!
+    countInStock: Int!
+    quantity: Int!
+    numReviews: Int!
+    rating: Float!
+    createdAt: String!
     product: ID
   }
   input OrderItemsInput {
     id: ID!
-    slug: String!
+    brand: String!
+    category: String!
     name: String!
-    quantity: Int!
+    slug: String!
     image: String!
-    price: Int!
+    images: [String]!
+    description: String!
+    price: Float!
+    countInStock: Int!
+    quantity: Int!
+    numReviews: Int!
+    rating: Float!
+    createdAt: String!
     product: ID
   }
   type ShippingAddress {
@@ -68,14 +84,20 @@ const typeDefs = gql`
     update_time: String
     email_address: String
   }
+  input PaymentResultInput {
+    id: String
+    status: String
+    update_time: String
+    email_address: String
+  }
   type Order {
     id: ID!
     orderItems: [OrderItems]!
     shippingAddress: ShippingAddress!
-    itemsPrice: Int!
-    taxPrice: Int!
-    shippingPrice: Int!
-    totalPrice: Int!
+    itemsPrice: Float!
+    taxPrice: Float!
+    shippingPrice: Float!
+    totalPrice: Float!
     paymentMethod: String!
     paymentResult: PaymentResult
     user: ID!
@@ -114,21 +136,27 @@ const typeDefs = gql`
   input OrderInput {
     orderItems: [OrderItemsInput]!
     shippingAddress: ShippingAddressInput!
-    itemsPrice: Int!
-    taxPrice: Int!
-    shippingPrice: Int!
-    totalPrice: Int!
+    itemsPrice: Float!
+    taxPrice: Float!
+    shippingPrice: Float!
+    totalPrice: Float!
     paymentMethod: String!
+    paymentResult: PaymentResultInput
+    user: ID
+    isPaid: Boolean
+    paidAt: String
+    isDelivered: Boolean
+    deliveredAt: String
   }
 
   type Query {
-    getProducts: [Product]!
+    getProducts: [Product!]
     getProductById(id: ID!): Product!
     getProductBySlug(slug: String!): Product!
   }
   type Mutation {
-    userLogin(loginInput: LoginInput): UserLogin
-    userRegister(registerInput: RegisterInput): UserRegister
+    userLogin(loginInput: LoginInput!): UserLogin
+    userRegister(registerInput: RegisterInput!): UserRegister
     orderCreation(orderInput: OrderInput): String
   }
 `;

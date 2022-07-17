@@ -3,11 +3,8 @@ const ordersServices = new OrdersServices();
 
 export default {
   Mutation: {
-    orderCreation: (_, payload, context) => {
-      console.log("context orderCreation :>> ", context.authScope);
-      const result = ordersServices.createOrder(payload);
-      console.log("result :>> ", result);
-      return "test";
+    orderCreation: async (parent, args, context, info) => {
+      return await ordersServices.createOrder({ args, context });
     }
   }
 };

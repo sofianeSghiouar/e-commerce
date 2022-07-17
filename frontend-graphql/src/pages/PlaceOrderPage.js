@@ -33,9 +33,9 @@ function PlaceOrderPage() {
   cart.totalPrice = round2(
     cart.itemsPrice + cart.shippingPrice + cart.taxPrice
   );
-
+  console.log("cartItems", cartItems);
   const mutations = new gqlMutations();
-  const [orderCreationHandler] = useMutation(mutations.ORDER_CREATION, {
+  const [orderCreation] = useMutation(mutations.ORDER_CREATION, {
     variables: {
       orderItems: cartItems,
       shippingAddress: shippingAddress,
@@ -45,8 +45,8 @@ function PlaceOrderPage() {
       shippingPrice: cart.shippingPrice,
       totalPrice: cart.totalPrice
     },
-    onCompleted: (data) => {
-      console.log("data useMutation() ==:>> ", data);
+    onCompleted: ({ orderCreation }) => {
+      console.log("data useMutation() ==:>> ", orderCreation);
     }
   });
 
@@ -161,7 +161,7 @@ function PlaceOrderPage() {
               type="button"
               disabled={cartItems.length === 0}
               className="mt-3"
-              onClick={() => orderCreationHandler()}
+              onClick={() => orderCreation()}
             >
               Continue
             </Button>
