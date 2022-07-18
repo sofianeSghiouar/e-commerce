@@ -31,20 +31,10 @@ const authLink = setContext((_, { headers }) => {
 });
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ addTypename: false }),
   name: "E-commerceSite",
   version: "1.0"
 });
-
-// const client = new ApolloClient({
-//   uri: "http://localhost:8002/",
-//   cache: new InMemoryCache(),
-//   headers: {
-//     authorization: localStorage.getItem("userInfo")
-//       ? JSON.parse(localStorage.getItem("userInfo")).token
-//       : ""
-//   }
-// });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -3,7 +3,7 @@ const ordersServices = new OrdersServices();
 
 export default {
   Mutation: {
-    orderCreation: async (parent, args, context, info) => {
+    orderCreation: async (parent, args, context) => {
       return await ordersServices.createOrder({ args, context });
     }
   }

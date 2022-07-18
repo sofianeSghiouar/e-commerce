@@ -7,6 +7,12 @@ const typeDefs = gql`
     rating: Float
     createdAt: String
   }
+  input ReviewsInput {
+    name: String
+    comment: String
+    rating: Float
+    createdAt: String
+  }
   type Product {
     id: ID!
     name: String!
@@ -17,10 +23,28 @@ const typeDefs = gql`
     category: String!
     description: String!
     price: Int!
+    quantity: Int!
     countInStock: Int!
     rating: Float!
     numReviews: Int!
-    reviews: Reviews!
+    reviews: [Reviews]
+    createdAt: String!
+  }
+  input ProductInput {
+    id: ID!
+    name: String!
+    slug: String!
+    image: String!
+    images: [String]!
+    brand: String!
+    category: String!
+    description: String!
+    quantity: Int!
+    price: Int!
+    countInStock: Int!
+    rating: Float!
+    numReviews: Int!
+    reviews: [ReviewsInput]
     createdAt: String!
   }
   type User {
@@ -31,48 +55,22 @@ const typeDefs = gql`
     createdAt: String!
   }
   type OrderItems {
-    id: ID!
-    brand: String!
-    category: String!
     name: String!
     slug: String!
     image: String!
-    images: [String]!
-    description: String!
     price: Float!
-    countInStock: Int!
     quantity: Int!
-    numReviews: Int!
-    rating: Float!
-    createdAt: String!
-    product: ID
-  }
-  input OrderItemsInput {
-    id: ID!
-    brand: String!
-    category: String!
-    name: String!
-    slug: String!
-    image: String!
-    images: [String]!
-    description: String!
-    price: Float!
-    countInStock: Int!
-    quantity: Int!
-    numReviews: Int!
-    rating: Float!
-    createdAt: String!
-    product: ID
+    product: ID!
   }
   type ShippingAddress {
-    fullname: String!
+    fullName: String!
     address: String!
     city: String!
     postalCode: String!
     country: String!
   }
   input ShippingAddressInput {
-    fullname: String!
+    fullName: String!
     address: String!
     city: String!
     postalCode: String!
@@ -91,7 +89,7 @@ const typeDefs = gql`
     email_address: String
   }
   type Order {
-    id: ID!
+    _id: ID!
     orderItems: [OrderItems]!
     shippingAddress: ShippingAddress!
     itemsPrice: Float!
@@ -101,9 +99,9 @@ const typeDefs = gql`
     paymentMethod: String!
     paymentResult: PaymentResult
     user: ID!
-    isPaid: Boolean
+    isPaid: Boolean!
     paidAt: String
-    isDelivered: Boolean
+    isDelivered: Boolean!
     deliveredAt: String
   }
 
@@ -134,7 +132,7 @@ const typeDefs = gql`
     confirmPassword: String!
   }
   input OrderInput {
-    orderItems: [OrderItemsInput]!
+    orderItems: [ProductInput]!
     shippingAddress: ShippingAddressInput!
     itemsPrice: Float!
     taxPrice: Float!
@@ -155,9 +153,9 @@ const typeDefs = gql`
     getProductBySlug(slug: String!): Product!
   }
   type Mutation {
-    userLogin(loginInput: LoginInput!): UserLogin
-    userRegister(registerInput: RegisterInput!): UserRegister
-    orderCreation(orderInput: OrderInput): String
+    userLogin(loginInput: LoginInput): UserLogin
+    userRegister(registerInput: RegisterInput): UserRegister
+    orderCreation(orderInput: OrderInput): Order
   }
 `;
 

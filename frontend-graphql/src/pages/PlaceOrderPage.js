@@ -19,7 +19,7 @@ function PlaceOrderPage() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart } = state;
   const { shippingAddress, cartItems, paymentMethod } = cart;
-
+  console.log("cart.cartItems :>> ", cart.cartItems);
   const round2 = (num) => {
     return Math.round(num * 100 + Number.EPSILON) / 100;
   };
@@ -33,20 +33,21 @@ function PlaceOrderPage() {
   cart.totalPrice = round2(
     cart.itemsPrice + cart.shippingPrice + cart.taxPrice
   );
-  console.log("cartItems", cartItems);
   const mutations = new gqlMutations();
   const [orderCreation] = useMutation(mutations.ORDER_CREATION, {
     variables: {
-      orderItems: cartItems,
-      shippingAddress: shippingAddress,
-      paymentMethod: paymentMethod,
-      taxPrice: cart.taxPrice,
-      itemsPrice: cart.itemsPrice,
-      shippingPrice: cart.shippingPrice,
-      totalPrice: cart.totalPrice
+      orderInput: {
+        orderItems: cartItems,
+        shippingAddress: shippingAddress,
+        paymentMethod: paymentMethod,
+        taxPrice: cart.taxPrice,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice
+      }
     },
-    onCompleted: ({ orderCreation }) => {
-      console.log("data useMutation() ==:>> ", orderCreation);
+    onCompleted: (data) => {
+      console.log("data useMutation() ==:>> ", data);
     }
   });
 

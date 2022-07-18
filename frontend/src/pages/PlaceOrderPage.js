@@ -39,6 +39,7 @@ function PlaceOrderPage() {
   const navigate = useNavigate();
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
+  console.log("cart.cartItems", cart.cartItems);
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 

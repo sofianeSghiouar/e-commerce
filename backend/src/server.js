@@ -20,9 +20,9 @@ app.use("/api", usersRouter);
 app.use("/api", seedRouter);
 app.use("/api", ordersRouter);
 
-app.use((err, req, res) => {
-  res.status(500).json({ message: err.message });
-});
+// app.use((err, req, res) => {
+//   res.status(500).json({ message: err.message });
+// });
 
 const PORT = process.env.PORT || 8000;
 console.log("PORT", PORT);
