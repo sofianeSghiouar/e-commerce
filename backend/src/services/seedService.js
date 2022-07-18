@@ -5,10 +5,8 @@ import data from "../utils/data.js";
 export default class SeedService {
   async resetDatabase() {
     try {
-      if ((await ProductModel.countDocuments()) < 4) {
-        await ProductModel.deleteMany({});
-        await ProductModel.insertMany(data.products);
-      }
+      await ProductModel.deleteMany({});
+      await ProductModel.insertMany(data.products);
       if (!(await UserModel.countDocuments())) {
         await UserModel.deleteMany({});
         await UserModel.insertMany(data.users);

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export default class Queries {
+export class Queries {
   GET_PRODUCTS = gql`
     query {
       getProducts {

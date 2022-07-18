@@ -13,7 +13,7 @@ import Loading from "../components/Loading";
 import Message from "../components/Message";
 import { Store } from "../Store";
 import { useQuery } from "@apollo/client";
-import Queries from "../utils/graphql/gqlQueries";
+import { Queries } from "../utils/graphql/gqlQueries";
 
 function ProductPage() {
   const params = useParams();

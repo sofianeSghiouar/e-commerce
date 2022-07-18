@@ -19,7 +19,7 @@ function Product(props) {
 
     const quantity = alreadyInCart ? alreadyInCart.quantity + 1 : 1;
     const { data } = await axios.get(
-      `http://localhost:8000/api/products/${article._id}`
+      `http://localhost:8001/api/products/${article._id}`
     );
     if (data.countInStock < article.quantity) {
       window.alert("Sorry. Product is out of stock");

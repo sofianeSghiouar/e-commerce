@@ -6,11 +6,32 @@ import App from "./App";
 import { HelmetProvider } from "react-helmet-async";
 import reportWebVitals from "./reportWebVitals";
 import { StoreProvider } from "./Store";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink
+} from "@apollo/client";
 
+import { setContext } from "@apollo/client/link/context";
+
+const httpLink = new createHttpLink({
+  uri: "http://localhost:8002/"
+});
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")).token
+    : "";
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ""
+    }
+  };
+});
 const client = new ApolloClient({
-  uri: "http://localhost:8000/",
-  cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache({ addTypename: false }),
   name: "E-commerceSite",
   version: "1.0"
 });

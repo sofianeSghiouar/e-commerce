@@ -1,5 +1,6 @@
 import productResolvers from "./products.js";
 import userResolvers from "./users.js";
+import orderResolvers from "./order.js";
 
 export default {
   Query: {
@@ -7,6 +8,7 @@ export default {
     //  ...userResolvers.Query
   },
   Mutation: {
-    ...userResolvers.Mutation
+    ...userResolvers.Mutation,
+    ...orderResolvers.Mutation
   }
 };

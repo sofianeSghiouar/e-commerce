@@ -9,7 +9,7 @@ export default async function queryFetch({
 }) {
   try {
     const result = await axios({
-      url: "http://localhost:8000/",
+      url: "http://localhost:8002/",
       method: method,
       headers: { "content-type": "application/json" },
       data: { query, variables }
