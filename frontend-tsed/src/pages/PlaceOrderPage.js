@@ -57,7 +57,6 @@ function PlaceOrderPage() {
           }
         }
       );
-      console.log("data :>> ", data);
       storeDispatch({ type: "ORDER_COST", payload: data.orderCost });
       localStorage.setItem("orderCost", JSON.stringify(data.orderCost));
     }
