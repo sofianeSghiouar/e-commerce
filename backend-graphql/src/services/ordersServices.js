@@ -1,4 +1,8 @@
-import { UserInputError } from "apollo-server";
+import {
+  AuthenticationError,
+  ForbiddenError,
+  UserInputError
+} from "apollo-server";
 import OrderModel from "../models/order.js";
 import verifyToken from "../utils/verifyToken.js";
 
@@ -9,7 +13,7 @@ export default class OrdersServices {
         const token = context.authScope.split(" ")[1];
         const user = await verifyToken(token);
         if (!user) {
-          throw new UserInputError("UnAuthorize");
+          throw new AuthenticationError("UnAuthorize");
         }
         const orderItems = orderInput.orderItems.map((item) => {
           return {
@@ -44,9 +48,9 @@ export default class OrdersServices {
         console.log("newOrder :>> ", newOrder);
         return newOrder;
       } catch (error) {
-        throw new Error(error);
+        throw new UserInputError(error);
       }
     }
-    throw new UserInputError("UnAuthorize");
+    throw new ForbiddenError("UnAuthorize");
   };
 }

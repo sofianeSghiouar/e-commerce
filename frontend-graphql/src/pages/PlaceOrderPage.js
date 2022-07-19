@@ -8,18 +8,22 @@ import {
   ListGroupItem,
   Row
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { Store } from "../Store";
 import gqlMutations from "../utils/graphql/gqlMutations";
 import { useMutation } from "@apollo/client";
+import Loading from "../components/Loading";
+import getErrorMessage from "../utils/errorsHandler";
+import { toast } from "react-toastify";
 
 function PlaceOrderPage() {
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart } = state;
   const { shippingAddress, cartItems, paymentMethod } = cart;
-  console.log("cart.cartItems :>> ", cart.cartItems);
+  const navigate = useNavigate();
   const round2 = (num) => {
     return Math.round(num * 100 + Number.EPSILON) / 100;
   };
@@ -34,7 +38,7 @@ function PlaceOrderPage() {
     cart.itemsPrice + cart.shippingPrice + cart.taxPrice
   );
   const mutations = new gqlMutations();
-  const [orderCreation] = useMutation(mutations.ORDER_CREATION, {
+  const [orderCreation, { loading }] = useMutation(mutations.ORDER_CREATION, {
     variables: {
       orderInput: {
         orderItems: cartItems,
@@ -47,7 +51,12 @@ function PlaceOrderPage() {
       }
     },
     onCompleted: (data) => {
-      console.log("data useMutation() ==:>> ", data);
+      storeDispatch({ type: "CART_CLEAR" });
+      localStorage.removeItem("cartItems");
+      navigate(`/order/${data.orderCreation._id}`);
+    },
+    onError: () => {
+      toast.error(getErrorMessage({ message: "Failed to fetch" }));
     }
   });
 
@@ -166,6 +175,7 @@ function PlaceOrderPage() {
             >
               Continue
             </Button>
+            {loading && <Loading />}
           </div>
         </Col>
       </Row>
