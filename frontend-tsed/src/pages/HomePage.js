@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer } from "react";
 import axios from "axios";
-// import logger from 'use-reducer-logger';
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Container from "react-bootstrap/esm/Container";
@@ -25,7 +24,6 @@ const reducer = (state, action) => {
 
 function HomePage() {
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
-    // wrap reducer in logger() for steps infos
     products: [],
     loading: true,
     error: ""
@@ -37,7 +35,6 @@ function HomePage() {
       try {
         const result = await axios.get("http://localhost:8083/rest/products");
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
-        console.log("result :>> ", result);
       } catch (error) {
         dispatch({ type: "FETCH_FAIL", payload: error.message });
       }

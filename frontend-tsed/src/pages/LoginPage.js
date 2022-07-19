@@ -29,7 +29,6 @@ function LoginPage() {
           password
         }
       );
-      console.log("data login page:>> ", data);
       if (data) {
         storeDispatch({ type: "USER_LOGIN", payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data));
@@ -38,7 +37,6 @@ function LoginPage() {
       }
       throw new Error("Server not respond, try to connect later");
     } catch (error) {
-      console.log("error login page:>> ", error);
       toast.error(getErrorMessage(error));
     }
   };

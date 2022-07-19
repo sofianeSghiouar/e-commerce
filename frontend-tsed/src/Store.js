@@ -53,7 +53,7 @@ function reducer(state, action) {
           shippingAddress: {},
           paymentMethod: "",
           orderSummary: {},
-          orderTotalPrice: {}
+          orderCost: {}
         },
         userInfo: null
       };
@@ -89,7 +89,7 @@ function reducer(state, action) {
           ...state.cart,
           cartItems: [],
           orderSummary: {},
-          orderTotalPrice: {}
+          orderCost: {}
         }
       };
     }
