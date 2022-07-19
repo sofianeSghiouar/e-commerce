@@ -46,7 +46,6 @@ function PlaceOrderPage() {
       return;
     }
 
-    console.log("cart :>> ", cart);
     async function calculatePrices() {
       const { data } = await axios.post(
         "http://localhost:8083/rest/order/cost",
@@ -58,10 +57,9 @@ function PlaceOrderPage() {
           }
         }
       );
-      console.log("data :====> ", data);
       storeDispatch({ type: "ORDER_COST", payload: data.orderCost });
     }
-    if (!cart.orderCost) {
+    if (!Object.keys(cart.orderCost).length) {
       calculatePrices();
     }
   }, [cart, navigate]);
@@ -87,14 +85,12 @@ function PlaceOrderPage() {
           }
         }
       );
-      // storeDispatch({ type: 'CART_CLEAR' });
-      // dispatch({ type: 'CREATE_SUCCESS' });
-      // localStorage.removeItem('cartItems');
-      console.log("data :>> ", data);
-      // navigate(`/order/${data.id}`);
+      storeDispatch({ type: "CART_CLEAR" });
+      dispatch({ type: "CREATE_SUCCESS" });
+      localStorage.removeItem("cartItems");
+      navigate(`/order/${data.id}`);
     } catch (error) {
       dispatch({ type: "CREATE_FAIL" });
-      console.log("error :>> ", error);
       toast.error(getErrorMessage(error));
     }
   };
