@@ -5,15 +5,8 @@ import data from "../utils/data.js";
 export default class SeedService {
   async resetDatabase() {
     try {
-<<<<<<< HEAD
       await ProductModel.deleteMany({});
       await ProductModel.insertMany(data.products);
-=======
-      if ((await ProductModel.countDocuments()) < 4) {
-        await ProductModel.deleteMany({});
-        await ProductModel.insertMany(data.products);
-      }
->>>>>>> ec17d9b (ci: update backend seed route)
       if (!(await UserModel.countDocuments())) {
         await UserModel.deleteMany({});
         await UserModel.insertMany(data.users);

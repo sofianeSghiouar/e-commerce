@@ -1,9 +1,5 @@
 import React, { useEffect, useReducer } from "react";
 import axios from "axios";
-<<<<<<< HEAD
-=======
-// import logger from 'use-reducer-logger';
->>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Container from "react-bootstrap/esm/Container";
@@ -39,10 +35,6 @@ function HomePage() {
       try {
         const result = await axios.get("http://localhost:8083/rest/products");
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
-<<<<<<< HEAD
-=======
-        console.log("result :>> ", result);
->>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
       } catch (error) {
         dispatch({ type: "FETCH_FAIL", payload: error.message });
       }

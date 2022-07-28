@@ -56,11 +56,7 @@ function reducer(state, action) {
           shippingAddress: {},
           paymentMethod: "",
           orderSummary: {},
-<<<<<<< HEAD
           orderCost: {}
-=======
-          orderTotalPrice: {}
->>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
         },
         userInfo: null
       };
@@ -96,11 +92,7 @@ function reducer(state, action) {
           ...state.cart,
           cartItems: [],
           orderSummary: {},
-<<<<<<< HEAD
           orderCost: {}
-=======
-          orderTotalPrice: {}
->>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
         }
       };
     }

@@ -29,10 +29,6 @@ function LoginPage() {
           password
         }
       );
-<<<<<<< HEAD
-=======
-      console.log("data login page:>> ", data);
->>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
       if (data) {
         storeDispatch({ type: "USER_LOGIN", payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data));
@@ -41,10 +37,6 @@ function LoginPage() {
       }
       throw new Error("Server not respond, try to connect later");
     } catch (error) {
-<<<<<<< HEAD
-=======
-      console.log("error login page:>> ", error);
->>>>>>> 67c2e32 (ci: refactor place order page, now manage order cost from backend)
       toast.error(getErrorMessage(error));
     }
   };
