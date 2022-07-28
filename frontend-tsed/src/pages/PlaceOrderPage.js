@@ -39,7 +39,7 @@ function PlaceOrderPage() {
   const navigate = useNavigate();
   const { state, dispatch: storeDispatch } = useContext(Store);
   const { cart, userInfo } = state;
-
+  console.log("cart :>> ", cart);
   useEffect(() => {
     if (!cart.paymentMethod) {
       navigate("/payment");
@@ -57,7 +57,9 @@ function PlaceOrderPage() {
           }
         }
       );
+      console.log("data :>> ", data);
       storeDispatch({ type: "ORDER_COST", payload: data.orderCost });
+      localStorage.setItem("orderCost", JSON.stringify(data.orderCost));
     }
     if (!Object.keys(cart.orderCost).length) {
       calculatePrices();
