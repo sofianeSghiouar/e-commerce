@@ -159,7 +159,6 @@ function PlaceOrderPage() {
         </Col>
         <Col md={4}>
           <Card>
-            <Card.Title>Order Summary</Card.Title>
             <ListGroup>
               <ListGroupItem>
                 <Row>

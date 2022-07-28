@@ -90,9 +90,7 @@ function reducer(state, action) {
         ...state,
         cart: {
           ...state.cart,
-          cartItems: [],
-          orderSummary: {},
-          orderCost: {}
+          cartItems: []
         }
       };
     }
