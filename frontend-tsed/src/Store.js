@@ -12,7 +12,10 @@ const initialState = {
       : [],
     paymentMethod: localStorage.getItem("paymentMethod")
       ? localStorage.getItem("paymentMethod")
-      : ""
+      : "",
+    orderCost: localStorage.getItem("orderCost")
+      ? JSON.parse(localStorage.getItem("orderCost"))
+      : {}
   },
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
