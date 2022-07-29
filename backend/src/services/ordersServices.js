@@ -4,11 +4,7 @@ export default class OrdersServices {
   async createOrder(user, body) {
     const orderItems = body.orderItems.map((item) => {
       return {
-        slug: item.slug,
-        name: item.name,
-        quantity: item.quantity,
-        image: item.image,
-        price: item.price,
+        ...item,
         product: item._id
       };
     });
@@ -33,5 +29,12 @@ export default class OrdersServices {
     });
     const newOrder = await order.save();
     return { order: newOrder };
+  }
+  async getOrderById(id) {
+    const order = await OrderModel.findById(id);
+    if (order) {
+      return order;
+    }
+    throw new Error({ message: "Order Not Found" });
   }
 }

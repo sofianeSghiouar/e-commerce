@@ -10,6 +10,12 @@ const routes = [
     method: "POST",
     pre: [isAuth],
     handler: ordersController.handleCreateOrder.bind(ordersController)
+  },
+  {
+    path: "/order/:id",
+    method: "GET",
+    pre: [isAuth],
+    handler: ordersController.handleGetOrderById.bind(ordersController)
   }
 ];
 
